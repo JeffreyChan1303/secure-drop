@@ -1,7 +1,8 @@
-# secure-drop
-Intro to Computer Security Project
+# SecureDrop
+## Intro to Computer Security Project - SecureDrop
+#### A more secure version of Apple's AirDrop
 
-### setup
+### Setup
 
 1. clone repository
 2. run python script by inputing the commands below
@@ -9,6 +10,7 @@ Intro to Computer Security Project
 python3 secure-drop.py
 ```
 
+#### Technologies
 #### Team Members
 
 * Jeffrey Chan

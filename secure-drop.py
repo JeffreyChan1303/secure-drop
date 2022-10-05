@@ -6,11 +6,10 @@ def main():
 
   # src.userRegistration()
 
-
-  # Shell loop
   print("\n\nWelcome to Secure Drop.")
   print("Type 'help' for commands.\n")
 
+  # Shell loop
   while True:
     command = input("$secure_drop> ")
 
