@@ -15,4 +15,4 @@ python3 secure-drop.py
 
 * Jeffrey Chan
 * Christian
-* Ben
+* Ben Jancsy

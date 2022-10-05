@@ -4,7 +4,7 @@ import src
 def main():
   # login to application
 
-  # src.userRegistration()
+  src.userLogin()
 
   print("\n\nWelcome to Secure Drop.")
   print("Type 'help' for commands.\n")
