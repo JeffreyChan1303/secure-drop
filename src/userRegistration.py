@@ -1,21 +1,11 @@
 import crypt
+import json
 
 def userRegistration(users):
    # users are stored in this format { email: [fullName, password] }
 
-  fp = open("./src/users.txt", "w")
 
-  # check if there are any existing users
-  if len(users) <= 0:
-    print("No users are registered with this client.")
-    registerNewUser = input("Do you want to register a new user (y/n)? ").strip()
-    while registerNewUser.lower() != 'y' and registerNewUser.lower() != 'n':
-      print("Invalid input")
-      registerNewUser = input("Do you want to register a new user (y/n)? ")
-    
-    if registerNewUser.lower() == 'n':
-      # this is a place holder for now
-      return "Failed"
+  print("Creating New User... ")
 
   fullName = input("Enter Full Name: ").strip()
   email = input("Enter Email Adress: ").strip()
@@ -38,10 +28,15 @@ def userRegistration(users):
     
   print("\nPasswords match.")
 
-  # add user into the txt file
-  fp.write(fullName + " " + email + " " + password + "\n")
+  # add user into the json file
+  users[email] = {
+    "fullName": fullName,
+    "password": password,
+  }
+  with open("./data/users.json", "w") as fp:
+    json.dump(users, fp)
 
-  print("User registered. \nExiting SecureDrop")
+  print("User registered. ")
   return "Success"
 
   
