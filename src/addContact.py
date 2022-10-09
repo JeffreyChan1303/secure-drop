@@ -1,12 +1,30 @@
 import json
 
-def addContact():
-  with open("./data/contacts.json", "r+") as fp:
-    userContacts = json.load(fp)
+def addContact(userEmail):
+  # read all the contacts in the database
+  with open("./data/contacts.json", "r") as fp:
+    allUserContacts = json.load(fp)
+    userContacts = allUserContacts[userEmail]
 
-  print(type(userContacts))
-  print(userContacts)
-  # fullName = input("  Enter Full Name: ")
-  # email = input("  Enter Email: ")
+  fullName = input("  Enter Full Name: ").strip()
+  email = input("  Enter Email: ").strip()
 
-  return
+  # check the database to see it the email is a valid contact
+  with open("./data/users.json", "r") as allUsersFp:
+    allUsers = json.load(allUsersFp)
+    while email not in allUsers:
+      print(f"Email is not valid. No {email} in our database. ")
+      fullName = input("  Enter Full Name: ").strip()
+      email = input("  Enter Email: ").strip()
+
+  # add contact into the user's contacts
+  userContacts[email] = {
+    "fullName": fullName,
+    "email": email,
+  }
+  allUserContacts[userEmail] = userContacts
+  with open("./data/contacts.json", "w") as fp:
+    json.dump(allUserContacts, fp)
+    print(f"Successfully added contact {email} as {fullName}.")
+
+  return "Success"

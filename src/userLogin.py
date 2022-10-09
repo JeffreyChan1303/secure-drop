@@ -31,7 +31,7 @@ def userLogin():
   
   print("Loged in as " + users[email]["fullName"] + ".")
 
-  return "Success"
+  return email
   
 
   

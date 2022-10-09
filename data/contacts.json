@@ -1,8 +1,1 @@
-{
-  "test@gmail.com": {
-    "kenny@gmail.com": {
-      "name": "kenny",
-      "email": "kenny@gmail.com"
-    }
-  }
-}
+{"test@gmail.com": {"kenny@gmail.com": {"fullName": "kenny", "email": "kenny@gmail.com"}}}

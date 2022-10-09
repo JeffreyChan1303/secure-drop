@@ -2,8 +2,8 @@ import src
 
 
 def main():
-  # login to application
-  src.userLogin()
+  # login to application, stores the userEmail for future use
+  userEmail = src.userLogin()
 
   print("\n\nWelcome to Secure Drop.")
   print("Type 'help' for commands.\n")
@@ -18,7 +18,7 @@ def main():
       print("  'send' -> Transfer file to contact")
       print("  'exit' -> Exit SecureDrop\n")
     elif command == "add":
-      src.addContact()
+      src.addContact(userEmail)
     elif command == "list":
       pass
     elif command == "send":
