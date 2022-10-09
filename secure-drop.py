@@ -13,12 +13,12 @@ def main():
     command = input("$secure_drop> ")
 
     if command == "help":
-      print("'add' -> Add a new contact")
-      print("'list' -> List all online contacts")
-      print("'send' -> Transfer file to contact")
-      print("'exit' -> Exit SecureDrop\n")
+      print("  'add' -> Add a new contact")
+      print("  'list' -> List all online contacts")
+      print("  'send' -> Transfer file to contact")
+      print("  'exit' -> Exit SecureDrop\n")
     elif command == "add":
-      pass
+      src.addContact()
     elif command == "list":
       pass
     elif command == "send":
@@ -26,7 +26,7 @@ def main():
     elif command == "exit":
       return
     else:
-      print(f"'{command}' is not a valid command.")
+      print(f"\n'{command}' is not a valid command.\n")
       
 main()
 
