@@ -31,7 +31,7 @@ def userRegistration(users):
   # add user into the json file
   users[email] = {
     "fullName": fullName,
-    "password": password,
+    "password": crypt.crypt(password, crypt.mksalt(crypt.METHOD_SHA256)),
   }
   with open("./data/users.json", "w") as fp:
     json.dump(users, fp)

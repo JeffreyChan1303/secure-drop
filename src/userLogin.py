@@ -1,4 +1,5 @@
 import json
+import crypt
 from src.userRegistration import userRegistration
 
 
@@ -24,7 +25,8 @@ def userLogin():
   print("User Login...")
   email = input("Enter Email Adress: ").strip()
   password = input("Enter Password: ").strip()
-  while email not in users or users[email]["password"] != password:
+
+  while email not in users or users[email]["password"] != crypt.crypt(password, crypt.mksalt(crypt.METHOD_SHA256)):
     print("Invalid Email or Password.")
     email = input("Enter Email Adress: ").strip()
     password = input("Enter Password: ").strip()

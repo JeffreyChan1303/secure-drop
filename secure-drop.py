@@ -10,7 +10,7 @@ def main():
 
   # Shell loop
   while True:
-    command = input("$secure_drop> ")
+    command = input("secure_drop> ")
 
     if command == "help":
       print("  'add' -> Add a new contact")

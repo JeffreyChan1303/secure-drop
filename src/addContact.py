@@ -25,6 +25,6 @@ def addContact(userEmail):
   allUserContacts[userEmail] = userContacts
   with open("./data/contacts.json", "w") as fp:
     json.dump(allUserContacts, fp)
-    print(f"Successfully added contact {email} as {fullName}.")
+    print(f"  Successfully added contact {email} as {fullName}.")
 
   return "Success"
