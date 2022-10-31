@@ -14,5 +14,5 @@ python3 secure-drop.py
 #### Team Members
 
 * Jeffrey Chan
-* Christian
-* Ben Jancsy
+* Justin Tarnowski
+* Samuel Vilt
