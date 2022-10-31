@@ -1,5 +1,5 @@
 import json
-import crypt
+import bcrypt
 from src.userRegistration import userRegistration
 
 
@@ -25,11 +25,13 @@ def userLogin():
   print("User Login...")
   email = input("Enter Email Adress: ").strip()
   password = input("Enter Password: ").strip()
+  bPassword = password.encode("utf-8")
 
-  while email not in users or users[email]["password"] != crypt.crypt(password, crypt.mksalt(crypt.METHOD_SHA256)):
+  while email not in users or not bcrypt.checkpw(bPassword, users[email]["password"].encode("utf-8")):
     print("Invalid Email or Password.")
     email = input("Enter Email Adress: ").strip()
     password = input("Enter Password: ").strip()
+    bPassword = password.encode("utf-8")
   
   print("Loged in as " + users[email]["fullName"] + ".")
 

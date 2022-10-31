@@ -1,44 +1,74 @@
-import crypt
+import bcrypt
 import json
 
-def userRegistration(users):
-   # users are stored in this format { email: [fullName, password] }
 
-
-  print("Creating New User... ")
-
-  fullName = input("Enter Full Name: ").strip()
-  email = input("Enter Email Adress: ").strip()
-
-  # check if the email is already taken
-  while email in users:
-    print("This email is already registered, login or use another email. ")
-    email = input("Enter Email Adress (type 'exit' to quit): ").strip()
-    if email == "exit":
-      return "Failed"
-
-  password = input("Enter Password: ").strip()
-  confirmPassword = input("Re-enter Password: ").strip()
+def checkPassword():
+  specialCharacters = { "~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", 
+    "{", "[", "]", "}", "\\", "|", ":", ";", "'", "<", ",", ">", ".", "/", "?"}
+  # declare checking value
+  passwordCheck = False
 
   # check if the passwords match
-  while password != confirmPassword:
-    print("\nPasswords do not match")
+  while passwordCheck != True:
+    passwordCheck = True
+
+    # input the password and confirm the password
     password = input("Enter Password: ").strip()
     confirmPassword = input("Re-enter Password: ").strip()
+
+    # check the length of the password
+    if len(password) < 8:
+      passwordCheck = False
+      print("\nPassword needs to have 8 or more characters.")
+    else:
+      print("\nPassword has 8 or more characters.")
+
+    # check if the password contains a special character
+    if passwordCheck == True: # This line may be removed if raw speed is not as important
+      containsSpecial = False
+      for c in password:
+        if c in specialCharacters:
+          containsSpecial = True
+          print("\nPassword contains a special character.")
+      
+      if containsSpecial == False:
+          print("\nPassword does not contain a special character.")
+          passwordCheck = False
+            
+    # check if the password and confirm password are the same
+    if passwordCheck == True and password != confirmPassword: #The passwordCheck == True can be removed if raw speed is not as important
+        passwordCheck = False
+        print("\nPasswords do not match.")
+    else:
+        print("\nPasswords do match.")
+  return password
+
+def userRegistration(users):
+    print("Creating New User... ")
+
+    fullName = input("Enter Full Name: ").strip()
+    email = input("Enter Email Adress: ").strip()
+
+    # check if the email is already taken
+    while email in users:
+        print("This email is already registered, login or use another email. ")
+        email = input("Enter Email Adress (type 'exit' to quit): ").strip()
+        if email == "exit":
+            return "Failed"
+
+    password = checkPassword()
+    bPassword = password.encode("utf-8")
+
+    print("\nPassword is valid.")
     
-  print("\nPasswords match.")
+    # add user into the json file
+    users[email] = {
+        "fullName": fullName,
+        "password": bcrypt.hashpw(bPassword, bcrypt.gensalt()).decode("utf-8")
+    }
+    with open("./data/users.json", "w") as fp:
+        json.dump(users, fp)
 
-  # add user into the json file
-  users[email] = {
-    "fullName": fullName,
-    "password": crypt.crypt(password, crypt.mksalt(crypt.METHOD_SHA256)),
-  }
-  with open("./data/users.json", "w") as fp:
-    json.dump(users, fp)
-
-  print("User registered. ")
-  return "Success"
-
-  
-
+    print("User registered. ")
+    return "Success"
 
