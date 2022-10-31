@@ -20,7 +20,7 @@ def main():
     elif command == "add":
       src.addContact(userEmail)
     elif command == "list":
-      pass
+      src.listContacts(userEmail)
     elif command == "send":
       pass
     elif command == "exit":

@@ -4,7 +4,11 @@ def addContact(userEmail):
   # read all the contacts in the database
   with open("./data/contacts.json", "r") as fp:
     allUserContacts = json.load(fp)
-    userContacts = allUserContacts[userEmail]
+    if userEmail in allUserContacts:
+      userContacts = allUserContacts[userEmail]
+    else:
+      userContacts = {}
+
 
   fullName = input("  Enter Full Name: ").strip()
   email = input("  Enter Email: ").strip()
