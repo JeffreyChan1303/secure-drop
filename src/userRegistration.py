@@ -20,27 +20,22 @@ def checkPassword():
     if len(password) < 8:
       passwordCheck = False
       print("\nPassword needs to have 8 or more characters.")
-    else:
-      print("\nPassword has 8 or more characters.")
 
     # check if the password contains a special character
-    if passwordCheck == True: # This line may be removed if raw speed is not as important
-      containsSpecial = False
-      for c in password:
-        if c in specialCharacters:
-          containsSpecial = True
-          print("\nPassword contains a special character.")
-      
-      if containsSpecial == False:
-          print("\nPassword does not contain a special character.")
-          passwordCheck = False
+    containsSpecial = False
+    for c in password:
+      if c in specialCharacters:
+        containsSpecial = True
+    
+    if containsSpecial == False:
+        print("\nPassword does not contain a special character.")
+        passwordCheck = False
             
     # check if the password and confirm password are the same
-    if passwordCheck == True and password != confirmPassword: #The passwordCheck == True can be removed if raw speed is not as important
+    if password != confirmPassword:
         passwordCheck = False
         print("\nPasswords do not match.")
-    else:
-        print("\nPasswords do match.")
+
   return password
 
 def userRegistration(users):
@@ -71,4 +66,3 @@ def userRegistration(users):
 
     print("User registered. ")
     return "Success"
-
