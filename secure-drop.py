@@ -1,9 +1,13 @@
 import src
+import threading
 
 
 def main():
   # login to application, stores the userEmail for future use
   userEmail = src.userLogin()
+  
+  serverThread = threading.Thread(target=src.udpserver)
+  serverThread.start()
 
   print("\n\nWelcome to Secure Drop.")
   print("Type 'help' for commands.\n")
@@ -29,7 +33,3 @@ def main():
       print(f"\n'{command}' is not a valid command.\n")
       
 main()
-
-
-
-
