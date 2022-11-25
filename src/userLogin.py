@@ -11,6 +11,7 @@ def userLogin():
 
   # if there are no users, call the user registration function
   if len(users) == 0:
+    print("No users are registered with this client.\n")  
     userRegistration(users)
   else:
     # ask the user if they want to create a new user
@@ -22,8 +23,10 @@ def userLogin():
       userRegistration(users)
 
   # user login loop
-  print("User Login...")
+  print("User Login...(enter 'exit' to quit):")
   email = input("Enter Email Adress: ").strip()
+  if email == 'exit':
+    return
   password = input("Enter Password: ").strip()
   bPassword = password.encode("utf-8")
 
@@ -33,11 +36,6 @@ def userLogin():
     password = input("Enter Password: ").strip()
     bPassword = password.encode("utf-8")
   
-  print("Loged in as " + users[email]["fullName"] + ".")
+  print("Logged in as " + users[email]["fullName"] + ".")
 
   return email
-  
-
-  
-
-

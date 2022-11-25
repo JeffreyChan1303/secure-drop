@@ -39,11 +39,12 @@ def checkPassword():
   return password
 
 def userRegistration(users):
-    print("Creating New User... ")
-
+    print("Creating New User... (enter 'exit' to quit):")
     fullName = input("Enter Full Name: ").strip()
+    if fullName == 'exit':
+      return
     email = input("Enter Email Adress: ").strip()
-
+    
     # check if the email is already taken
     while email in users:
         print("This email is already registered, login or use another email. ")
