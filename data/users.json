@@ -1,1 +1,10 @@
-{"Jimmy_Smith@gmail.com": {"fullName": "Jimmy Smith", "password": "$2b$12$8S/Hg3Z81gi1XrwLSJVUZOPrfIW4bvNmxOSK8YHTDYXgw3c/s118m"}}
+{
+  "Jimmy_Smith@gmail.com": {
+    "fullName": "Jimmy Smith",
+    "password": "$2b$12$8S/Hg3Z81gi1XrwLSJVUZOPrfIW4bvNmxOSK8YHTDYXgw3c/s118m"
+  },
+  "jeff": {
+    "fullName": "jeff",
+    "password": "$2b$12$XCivXx.HuJlWWXDClOI7M.qpQF2H27rjYGZZzk1M2q1L7WjkB9T4."
+  }
+}

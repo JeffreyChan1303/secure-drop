@@ -63,7 +63,7 @@ def userRegistration(users):
         "password": bcrypt.hashpw(bPassword, bcrypt.gensalt()).decode("utf-8")
     }
     with open("./data/users.json", "w") as fp:
-        json.dump(users, fp)
+        json.dump(users, fp, indent=2)
 
     print("User registered. ")
     return "Success"
