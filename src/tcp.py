@@ -10,7 +10,7 @@ def tcpServer(host, port):
     s.bind((host,port)) # binds address:(hostname,port#) to socket 
     s.listen(5)
     while True:
-        print("Listening at ", s.getsockname())
+        print("TCP server listening at ", s.getsockname())
         server,addr = s.accept()
         print("Accept connection from: ",addr)
         print("Connection built from ", server.getsockname(), " and ", server.getpeername())
