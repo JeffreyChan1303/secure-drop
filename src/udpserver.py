@@ -20,7 +20,8 @@ def udpserver(userEmail):
 
     # if another user requests LIST, it will run this block of code
     if msg == "Looking for file transfer":
-      UDPsocket.sendto(f"Looking for file transfer,{userEmail}".encode('utf-8'), addr)
+      if email != userEmail:
+        UDPsocket.sendto(f"Looking for file transfer,{userEmail}".encode('utf-8'), (addr[0], 25565))
       nearbyUsers[email] = {
         "ip": addr[0],
         "port": addr[1],
