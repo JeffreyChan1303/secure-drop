@@ -1,10 +1,10 @@
 {
-  "Jimmy_Smith@gmail.com": {
-    "fullName": "Jimmy Smith",
-    "password": "$2b$12$8S/Hg3Z81gi1XrwLSJVUZOPrfIW4bvNmxOSK8YHTDYXgw3c/s118m"
+  "jeff@gmail.com": {
+    "fullName": "Jeffrey Chan",
+    "password": "$2b$12$FQKq.ODNHIyauy6m8XkBYeCdc.v9P98c5em2a1INqkCKfGw0Kaoim"
   },
-  "jeff": {
-    "fullName": "jeff",
-    "password": "$2b$12$XCivXx.HuJlWWXDClOI7M.qpQF2H27rjYGZZzk1M2q1L7WjkB9T4."
+  "john@gmail.com": {
+    "fullName": "John Lee",
+    "password": "$2b$12$EbcC8ZtoDyLuk04oc3rse.nf1ZrMwM0LYemqH5yIfHJI09Vx2iaDK"
   }
 }

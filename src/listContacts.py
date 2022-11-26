@@ -5,7 +5,8 @@ def listContacts(userEmail):
 
   UDPsocket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) ## AF_INET is family of protocols. SOCK_DGRAM is a type that for connectionless protocols
   port = 25565
-  msg = b"(Broadcast message): Please respond if you are online."
+  # msg = b"(Broadcast message): Please respond if you are online."
+  msg = b"Looking for file transfer"
   UDPsocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
   UDPsocket.sendto(msg, ("255.255.255.255",port))
 
