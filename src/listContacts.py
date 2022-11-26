@@ -22,9 +22,4 @@ def listContacts(userEmail):
       print(email, "|", nearbyUsers[email]['ip'],"|", nearbyUsers[email]['port'])
 
 
-  # with open("./data/contacts.json", "r") as fp:
-  #   allContacts = json.load(fp)
-  #   userContacts = allContacts[userEmail]
-  #   print("\nFull Name | Email\n")
-  #   for contact in userContacts.values():
-  #     print(contact["fullName"], "|", contact["email"])
+  return

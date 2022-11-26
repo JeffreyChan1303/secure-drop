@@ -3,3 +3,4 @@ from src.userLogin import userLogin
 from src.addContact import addContact
 from src.listContacts import listContacts
 from src.udpserver import udpserver
+from src.sendMessage import sendMessage

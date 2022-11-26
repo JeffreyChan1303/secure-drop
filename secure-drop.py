@@ -27,7 +27,7 @@ def main():
     elif command == "list":
       src.listContacts(userEmail)
     elif command == "send":
-      pass
+      src.sendMessage()
     elif command == "exit":
       return
     else:
