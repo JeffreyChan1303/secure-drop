@@ -6,7 +6,7 @@ from src.tcp import tcpClient, tcpServer
 '''
 This is a background thread that runs and continuously picks broadcasts and thier respective ip adresses
 '''
-def udpserver():
+def udpserver(userEmail):
   nearbyUsers = {}
   ## AF_INET is family of protocols. SOCK_DGRAM is a type that for connectionless protocols
   UDPsocket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM, socket.IPPROTO_UDP)
@@ -23,6 +23,8 @@ def udpserver():
 
     # if another user requests LIST CONTACTS it will run this block of code
     if msg == "Looking for file transfer":
+      if email not in nearbyUsers:
+        UDPsocket.sendto(f"Looking for file transfer,{userEmail}".encode('utf-8'), addr)
       nearbyUsers[email] = {
         "ip": addr[0],
         "port": addr[1],

@@ -7,7 +7,7 @@ def main():
   # userEmail, userFullName = src.userLogin()
   userEmail = "jeff@gmail.com"
   
-  serverThread = threading.Thread(target=src.udpserver)
+  serverThread = threading.Thread(target=src.udpserver, args=[userEmail])
   serverThread.start()
 
   print("\n\nWelcome to Secure Drop.")
