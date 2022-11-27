@@ -11,7 +11,7 @@ def udpserver(userEmail):
   UDPsocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
   UDPsocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
   host = ''
-  port = 25565 #port number
+  port = 25555 #port number
   UDPsocket.bind((host,port)) # binds address:(hostname,port#) to socket 
 
   while True:
@@ -20,8 +20,9 @@ def udpserver(userEmail):
 
     # if another user requests LIST, it will run this block of code
     if msg == "Looking for file transfer":
-      if email != userEmail:
-        UDPsocket.sendto(f"Looking for file transfer,{userEmail}".encode('utf-8'), (addr[0], 25565))
+      if email not in nearbyUsers:
+        print("Device Reply")
+        UDPsocket.sendto(f"Looking for file transfer,{userEmail}".encode('utf-8'), addr)
       nearbyUsers[email] = {
         "ip": addr[0],
         "port": addr[1],

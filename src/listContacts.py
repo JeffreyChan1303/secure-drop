@@ -3,9 +3,8 @@ import socket
 from time import sleep
 
 def listContacts(userEmail):
-
   UDPsocket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) ## AF_INET is family of protocols. SOCK_DGRAM is a type that for connectionless protocols
-  port = 25565
+  port = 25555
   # msg = b"(Broadcast message): Please respond if you are online."
   msg = f"Looking for file transfer,{userEmail}".encode("utf-8")
   UDPsocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
