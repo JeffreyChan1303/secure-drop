@@ -5,8 +5,8 @@ import threading
 def main():
   stopThreads = False
   # login to application, stores the userEmail for future use
-  #userEmail = src.userLogin()
-  userEmail = "Jimmy_Smith@gmail.com"
+  # userEmail = src.userLogin()
+  userEmail = "jeff@gmail.com"
   
   serverThread = threading.Thread(target=src.udpserver, args=(userEmail, stopThreads))
   serverThread.start()
