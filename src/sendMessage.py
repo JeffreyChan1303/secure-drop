@@ -1,5 +1,5 @@
 import json
-from src.tcp import tcpClient
+from src.tcpclient import tcpClient
 # PGP, Generate private and public RSA key when creating an acount
 # Generate AES Key when generating message with noince, and tag.
 

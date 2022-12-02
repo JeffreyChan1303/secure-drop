@@ -9,6 +9,9 @@ def listContacts(userEmail):
   UDPsocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
   UDPsocket.sendto(msg, ("255.255.255.255",port))
 
+  # Start tcp server
+  
+  
   print("Waiting 3 seconds for responses... ")
   sleep(3)
 
