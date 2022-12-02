@@ -49,6 +49,7 @@ def tcpServer(userEmail):
           
         # if the message is "Contact not verified"
         if msg[0] == "Contact not verified":
+            server.close()
             break
 
         

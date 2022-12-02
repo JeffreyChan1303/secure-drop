@@ -11,7 +11,7 @@ def tcpClient(userEmail, targetIP, msgType):
     TCPsocket.connect((host,port))
 
     # if sending a "List Request", send the user's email
-    if msgType == "List Request":
+    if msgType == "List Reply":
         TCPsocket.send(bytes(f"List Reply,{userEmail}", "utf-8"))
 
     # receive the "List Request #2"

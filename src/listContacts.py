@@ -16,8 +16,8 @@ def listContacts(userEmail):
   sleep(3)
 
   # here print out the nearby users
-  with open("./data/nearbyContacts.json", "r") as fp:
-    nearbyContacts= json.load(fp)
+  with open("./data/nearbyContacts.json", "r") as NCfp:
+    nearbyContacts= json.load(NCfp)
     print("\n Email | IP Address")
     if len(nearbyContacts) == 0:
       print("No Contacts Online.\n")
