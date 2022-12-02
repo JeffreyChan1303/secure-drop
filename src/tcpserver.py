@@ -35,19 +35,21 @@ def tcpServer(userEmail):
                 else:
                     server.send(bytes(f"Contact not verified", "utf-8"))
                     server.close()
+                    break
 
         # if the message is "Both contacts verified"
         if msg[0] == "Both contacts verified":
-            with open("./data/nearbyUsers.json", "r+") as NUfp:
-                nearbyUsers = json.load(NUfp)
-                nearbyUsers[emailReply] = {
+            with open("./data/nearbyContacts.json", "r+") as NCfp:
+                nearbyContacts = json.load(NCfp)
+                nearbyContacts[emailReply] = {
                     "ip": addr[0]
                 }
-        server.close()
+            server.close()
+            break
           
         # if the message is "Contact not verified"
         if msg[0] == "Contact not verified":
-            print("server replied, socket closed")
+            break
 
         
       
