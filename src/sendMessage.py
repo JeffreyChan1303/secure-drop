@@ -26,4 +26,5 @@ def sendMessage():
         else:
             targetIp = nearbyUsers[targetEmail]["ip"]
             # SEND TCP MESSAGE
+            
         

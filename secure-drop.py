@@ -3,11 +3,12 @@ import threading
 
 
 def main():
+  stop_threads = False
   # login to application, stores the userEmail for future use
   # userEmail = src.userLogin()
   userEmail = "jeff@gmail.com"
   
-  serverThreadUDP = threading.Thread(target=src.udpServer, args=(userEmail,))
+  serverThreadUDP = threading.Thread(target=src.udpServer, args=(userEmail, stop_threads))
   serverThreadTCP = threading.Thread(target=src.tcpServer, args=(userEmail,))
   serverThreadUDP.start()
 
@@ -27,23 +28,20 @@ def main():
       src.addContact(userEmail)
 
     elif command == "list":
-      print(serverThreadTCP.is_alive())
       serverThreadTCP.start()
       src.listContacts(userEmail)
-      print(serverThreadTCP.is_alive())
-      print("----Join-----")
       serverThreadTCP.join()
-      print(serverThreadTCP.is_alive())
+      serverThreadTCP = threading.Thread(target=src.tcpServer, args=(userEmail,))
 
     elif command == "send":
       serverThreadTCP.start()
       src.sendMessage()
-      print("----Join-----")
       serverThreadTCP.join()
+      serverThreadTCP = threading.Thread(target=src.tcpServer, args=(userEmail,))
 
     elif command == "exit": 
+      stop_threads = True
       serverThreadUDP.join()
-      serverThreadTCP.join()
       return
     else:
       print(f"\n'{command}' is not a valid command.\n")
