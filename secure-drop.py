@@ -9,8 +9,10 @@ def main():
   userEmail = "jeff@gmail.com"
   
   serverThreadUDP = threading.Thread(target=src.udpServer, args=(userEmail, stop_threads))
-  serverThreadTCP = threading.Thread(target=src.tcpServer, args=(userEmail,))
+  serverThreadTCPList = threading.Thread(target=src.tcpServerList, args=(userEmail,))
+  serverThreadTCPSend = threading.Thread(target=src.tcpServerSend, args=(stop_threads))
   serverThreadUDP.start()
+  serverThreadTCPSend.start()
 
   print("\n\nWelcome to Secure Drop.")
   print("Type 'help' for commands.\n")
@@ -28,19 +30,21 @@ def main():
       src.addContact(userEmail)
 
     elif command == "list":
-      serverThreadTCP.start()
+      serverThreadTCPList.start()
       src.listContacts(userEmail)
-      serverThreadTCP.join()
-      serverThreadTCP = threading.Thread(target=src.tcpServer, args=(userEmail,))
+      serverThreadTCPList.join()
+      serverThreadTCPList = threading.Thread(target=src.tcpServer, args=(userEmail,))
 
     elif command == "send":
-      serverThreadTCP.start()
+      serverThreadTCPList.start()
+      src.listContacts(userEmail)
+      serverThreadTCPList.join()
+      serverThreadTCPList = threading.Thread(target=src.tcpServer, args=(userEmail,))
       src.sendMessage()
-      serverThreadTCP.join()
-      serverThreadTCP = threading.Thread(target=src.tcpServer, args=(userEmail,))
 
     elif command == "exit": 
       stop_threads = True
+      serverThreadTCPSend.join()
       serverThreadUDP.join()
       return
     else:

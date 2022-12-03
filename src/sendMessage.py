@@ -1,4 +1,5 @@
 import json
+import socket
 from src.tcpclient import tcpClient
 # PGP, Generate private and public RSA key when creating an acount
 # Generate AES Key when generating message with noince, and tag.
@@ -13,18 +14,21 @@ def sendMessage():
     #       use PGP (pretty good privacy) for the file encryption
     # 6. Close the connection
 
-    with open("./data/nearbyUsers.json", "r") as fp:
-        nearbyUsers= json.load(fp)
-        print("\n Email | IP Address | Port \n")
-        for email in nearbyUsers:
-            print(email, "|", nearbyUsers[email]['ip'],"|", nearbyUsers[email]['port'])
+    with open("./data/nearbyContacts.json", "r") as fp:
+        nearbyContacts= json.load(fp)
+    targetEmail = input("type email to send file to. ").strip()
 
-        targetEmail = input("type email to send file to. ").strip()
+    if targetEmail not in nearbyContacts:
+        print("Not a valid email")
+        return
 
-        if targetEmail not in nearbyUsers:
-            print("Not a valid email")
-        else:
-            targetIp = nearbyUsers[targetEmail]["ip"]
-            # SEND TCP MESSAGE
-            
-        
+    targetIP = nearbyContacts[targetEmail]["ip"]
+
+    TCPsocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    TCPsocket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+    host = targetIP
+    port = 25575
+    TCPsocket.connect((host,port))
+
+    # send file
+    TCPsocket.send("File sent!", "utf-8")
