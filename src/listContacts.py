@@ -12,7 +12,6 @@ def listContacts(userEmail):
   print(f"Broadcasted a 'List Request' to (255.255.255.255, {port})")
 
   # Start tcp server
-  tcpServer(userEmail)
   print("Waiting 3 seconds for responses... ")
   sleep(3)
 

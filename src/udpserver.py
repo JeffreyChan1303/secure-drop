@@ -1,12 +1,11 @@
 import socket
-import json
 from src.tcpclient import tcpClient
 
 '''
 This is a background thread that runs and continuously picks broadcasts and thier respective ip adresses
 '''
 
-def udpserver(userEmail):
+def udpServer(userEmail):
   # resets nearby users on successful login
   nearbyUsers = {}
 
@@ -25,7 +24,7 @@ def udpserver(userEmail):
   # listening for "List Request"
   while True:
     print("UDP server listening at ", UDPsocket.getsockname())
-    data,addr = UDPsocket.recvfrom(1024) # this method receives UDP message , 1024 means the # of bytes to be read from the udp socket.
+    data,addr = UDPsocket.recvfrom(1024)
     msg = data.decode("utf-8").split(",")
 
     print("----- Incoming IP: " + addr[0] + " | Server IP: " + userIP + " -----")

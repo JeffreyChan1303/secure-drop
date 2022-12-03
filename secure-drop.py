@@ -7,8 +7,8 @@ def main():
   # userEmail = src.userLogin()
   userEmail = "jeff@gmail.com"
   
-  serverThreadUDP = threading.Thread(target=src.udpserver, args=(userEmail,))
-  serverThreadTCP = threading.Thread(target=src.tcpserver, args=(userEmail,))
+  serverThreadUDP = threading.Thread(target=src.udpServer, args=(userEmail,))
+  serverThreadTCP = threading.Thread(target=src.tcpServer, args=(userEmail,))
   serverThreadUDP.start()
 
   print("\n\nWelcome to Secure Drop.")
@@ -27,13 +27,18 @@ def main():
       src.addContact(userEmail)
 
     elif command == "list":
+      print(serverThreadTCP.is_alive())
       serverThreadTCP.start()
       src.listContacts(userEmail)
+      print(serverThreadTCP.is_alive())
+      print("----Join-----")
       serverThreadTCP.join()
+      print(serverThreadTCP.is_alive())
 
     elif command == "send":
       serverThreadTCP.start()
       src.sendMessage()
+      print("----Join-----")
       serverThreadTCP.join()
 
     elif command == "exit": 

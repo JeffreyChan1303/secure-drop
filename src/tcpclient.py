@@ -1,6 +1,7 @@
 import socket
 import json
 
+
 # establish tcp connection with specific host and port number
 def tcpClient(userEmail, targetIP, msgType):
     # sets up the options and address for the TCP socket
@@ -26,10 +27,10 @@ def tcpClient(userEmail, targetIP, msgType):
             allContacts = json.load(Cfp)
             if msg[1] in allContacts:
                 print(f"Sent a 'Both Contacts Verified' to ({host}, {port})")
-                TCPsocket.send(bytes(f"Both Contacts Verified", "utf-8"))        
+                TCPsocket.send(bytes("Both Contacts Verified", "utf-8"))  
             else:
                 print(f"Sent a 'Contact Not Verifeid' to ({host}, {port})")
-                TCPsocket.send(bytes(f"Contact Not Verified", "utf-8"))
-        TCPsocket.close()
+                TCPsocket.send(bytes("Contact Not Verified", "utf-8"))
+                TCPsocket.close()
 
 
