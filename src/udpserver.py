@@ -22,9 +22,9 @@ def udpserver(userEmail):
 
   # listening for "List Request"
   while True:
+    print("UDP server listening at ", UDPsocket.getsockname())
     data,addr = UDPsocket.recvfrom(1024) # this method receives UDP message , 1024 means the # of bytes to be read from the udp socket.
     msg = data.decode("utf-8").split(",")
-    print(msg)
 
     # if another user sends "List Request", it will send "List Reply"
     if msg[0] == "List Request" and addr[0] is not userIP:

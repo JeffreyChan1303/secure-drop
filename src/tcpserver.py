@@ -18,27 +18,27 @@ def tcpServer(userEmail):
     while True:
         print("TCP server listening at ", TCPsocket.getsockname())
         server,addr = TCPsocket.accept()
-        print("Accept connection from: ",addr)
-        print("Connection built from ", server.getsockname(), " and ", server.getpeername())
         msg = server.recv(1024)
-        print("The incoming message is : ", msg.decode("utf-8"))
-
         msg = msg.decode("utf-8").split(",")
 
         # if the message is "List Reply"
         if msg[0] == "List Reply":
+            print("Received a List Reply")
             emailReply = msg[1]
             with open("./data/contacts.json", "r") as Cfp:
                 allContacts = json.load(Cfp)
                 if emailReply in allContacts:
+                    print("Sent a List Request #2")
                     server.send(bytes(f"List Request #2,{userEmail}", "utf-8"))
                 else:
-                    server.send(bytes(f"Contact not verified", "utf-8"))
+                    print("Sent a Contact Not Verifeid")
+                    server.send(bytes(f"Contact Not Verified", "utf-8"))
                     server.close()
                     break
 
         # if the message is "Both contacts verified"
-        if msg[0] == "Both contacts verified":
+        if msg[0] == "Both Contacts Verified":
+            print("Received a Both Contacts verified...Closing TCP server")
             with open("./data/nearbyContacts.json", "r+") as NCfp:
                 nearbyContacts = json.load(NCfp)
                 nearbyContacts[emailReply] = {
@@ -48,7 +48,8 @@ def tcpServer(userEmail):
             break
           
         # if the message is "Contact not verified"
-        if msg[0] == "Contact not verified":
+        if msg[0] == "Contact Not Verified":
+            print("Received a Contact not verified...Closing TCP server")
             server.close()
             break
 
