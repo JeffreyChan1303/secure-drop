@@ -20,15 +20,19 @@ def udpserver(userEmail):
   userIP = socket.gethostbyname(userHostName)
   UDPsocket.bind((host,port)) # binds address:(hostname,port#) to socket 
 
+  print("userIP is " + userIP)
+
   # listening for "List Request"
   while True:
     print("UDP server listening at ", UDPsocket.getsockname())
     data,addr = UDPsocket.recvfrom(1024) # this method receives UDP message , 1024 means the # of bytes to be read from the udp socket.
     msg = data.decode("utf-8").split(",")
 
+    print("----- Incoming IP: " + addr[0] + " | Server IP: " + userIP + " -----")
     # if another user sends "List Request", it will send "List Reply"
-    if msg[0] == "List Request" and addr[0] is not userIP:
-      print(f"Received a 'List Request' from {addr}")
-
+    if msg[0] == "List Request" and not(str(addr[0]) == str(userIP)):
+      print(f"Received a 'List Request' from ({addr[0]}, {addr[1]})")
       # start tcp client and transfer email
       tcpClient(userEmail, addr[0], "List Reply")
+    else:
+       print("----- Received a broadcast from myself -----")

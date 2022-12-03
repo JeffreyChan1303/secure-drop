@@ -12,7 +12,7 @@ def tcpClient(userEmail, targetIP, msgType):
 
     # if sending a "List Request", send the user's email
     if msgType == "List Reply":
-        print("Sent a List Reply")
+        print(f"Sent a 'List Reply' to ({host}, {port})")
         TCPsocket.send(bytes(f"List Reply,{userEmail}", "utf-8"))
 
     # receive the "List Request #2"
@@ -21,14 +21,14 @@ def tcpClient(userEmail, targetIP, msgType):
 
     # check if the other user's email is in this user's contacts, if it is, then send a confirmation message
     if msg[0] == "List Request #2":
-        print("Received a List Request #2")
+        print(f"Received a 'List Request #2' from {host} (ADD PORT)")
         with open("./data/contacts.json", "r") as Cfp:
             allContacts = json.load(Cfp)
             if msg[1] in allContacts:
-                print("Sent a Both Contacts Verified")
+                print(f"Sent a 'Both Contacts Verified' to ({host}, {port})")
                 TCPsocket.send(bytes(f"Both Contacts Verified", "utf-8"))        
             else:
-                print("Sent a Contact Not Verifeid")
+                print(f"Sent a 'Contact Not Verifeid' to ({host}, {port})")
                 TCPsocket.send(bytes(f"Contact Not Verified", "utf-8"))
         TCPsocket.close()
 

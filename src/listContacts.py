@@ -9,6 +9,7 @@ def listContacts(userEmail):
   msg = "List Request".encode("utf-8")
   UDPsocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
   UDPsocket.sendto(msg, ("255.255.255.255",port))
+  print(f"Broadcasted a 'List Request' to (255.255.255.255, {port})")
 
   # Start tcp server
   tcpServer(userEmail)

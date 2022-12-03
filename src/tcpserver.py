@@ -23,15 +23,15 @@ def tcpServer(userEmail):
 
         # if the message is "List Reply"
         if msg[0] == "List Reply":
-            print("Received a List Reply")
+            print(f"Received a 'List Reply' from ({addr[0]}, {addr[1]})")
             emailReply = msg[1]
             with open("./data/contacts.json", "r") as Cfp:
                 allContacts = json.load(Cfp)
                 if emailReply in allContacts:
-                    print("Sent a List Request #2")
+                    print(f"Sent a 'List Request #2' to ({addr[0]}, {port})")
                     server.send(bytes(f"List Request #2,{userEmail}", "utf-8"))
                 else:
-                    print("Sent a Contact Not Verifeid")
+                    print(f"Sent a 'Contact Not Verifeid' to ({addr[0]}, {port})")
                     server.send(bytes(f"Contact Not Verified", "utf-8"))
                     server.close()
                     break
