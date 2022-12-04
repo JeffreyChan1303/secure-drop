@@ -1,9 +1,16 @@
 import src
+import threading
 
 
 def main():
+  stop_threads = False
   # login to application, stores the userEmail for future use
-  userEmail = src.userLogin()
+  # userEmail = src.userLogin()
+  userEmail = "jeff@gmail.com"
+  
+  serverThreadUDP = threading.Thread(target=src.udpServer, args=(userEmail, stop_threads))
+  serverThreadTCP = threading.Thread(target=src.tcpServer, args=(userEmail,))
+  serverThreadUDP.start()
 
   print("\n\nWelcome to Secure Drop.")
   print("Type 'help' for commands.\n")
@@ -19,17 +26,24 @@ def main():
       print("  'exit' -> Exit SecureDrop\n")
     elif command == "add":
       src.addContact(userEmail)
+
     elif command == "list":
-      pass
+      serverThreadTCP.start()
+      src.listContacts(userEmail)
+      serverThreadTCP.join()
+      serverThreadTCP = threading.Thread(target=src.tcpServer, args=(userEmail,))
+
     elif command == "send":
-      pass
-    elif command == "exit":
+      serverThreadTCP.start()
+      src.sendMessage()
+      serverThreadTCP.join()
+      serverThreadTCP = threading.Thread(target=src.tcpServer, args=(userEmail,))
+
+    elif command == "exit": 
+      stop_threads = True
+      serverThreadUDP.join()
       return
     else:
       print(f"\n'{command}' is not a valid command.\n")
       
 main()
-
-
-
-

@@ -1,12 +1,19 @@
 import json
 
+
 def addContact(userEmail):
   # read all the contacts in the database
   with open("./data/contacts.json", "r") as fp:
     allUserContacts = json.load(fp)
-    userContacts = allUserContacts[userEmail]
+    if userEmail in allUserContacts:
+      userContacts = allUserContacts[userEmail]
+    else:
+      userContacts = {}
 
+  print("\n  Adding a contact (enter 'exit' to quit):")
   fullName = input("  Enter Full Name: ").strip()
+  if fullName == 'exit':
+    return
   email = input("  Enter Email: ").strip()
 
   # check the database to see it the email is a valid contact
@@ -22,6 +29,7 @@ def addContact(userEmail):
     "fullName": fullName,
     "email": email,
   }
+
   allUserContacts[userEmail] = userContacts
   with open("./data/contacts.json", "w") as fp:
     json.dump(allUserContacts, fp)

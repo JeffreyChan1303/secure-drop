@@ -1,5 +1,5 @@
 import json
-import crypt
+import bcrypt
 from src.userRegistration import userRegistration
 
 
@@ -11,6 +11,7 @@ def userLogin():
 
   # if there are no users, call the user registration function
   if len(users) == 0:
+    print("No users are registered with this client.\n")  
     userRegistration(users)
   else:
     # ask the user if they want to create a new user
@@ -22,20 +23,19 @@ def userLogin():
       userRegistration(users)
 
   # user login loop
-  print("User Login...")
+  print("User Login...(enter 'exit' to quit):")
   email = input("Enter Email Adress: ").strip()
+  if email == 'exit':
+    return
   password = input("Enter Password: ").strip()
+  bPassword = password.encode("utf-8")
 
-  while email not in users or users[email]["password"] != crypt.crypt(password, crypt.mksalt(crypt.METHOD_SHA256)):
+  while email not in users or not bcrypt.checkpw(bPassword, users[email]["password"].encode("utf-8")):
     print("Invalid Email or Password.")
     email = input("Enter Email Adress: ").strip()
     password = input("Enter Password: ").strip()
+    bPassword = password.encode("utf-8")
   
-  print("Loged in as " + users[email]["fullName"] + ".")
+  print("Logged in as " + users[email]["fullName"] + ".")
 
   return email
-  
-
-  
-
-
