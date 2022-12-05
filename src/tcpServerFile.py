@@ -15,13 +15,13 @@ def tcpServerFile(stop_threads):
         msg = server.recv(1024)
         msg = msg.decode("utf-8")
 
-        if stop_threads is False:
+        if stop_threads == True:
             server.close()
             break
 
         print(msg)
 
-        if msg is "File sent!":
+        if msg == "File sent!":
             print("Received file")
             server.close()
             break

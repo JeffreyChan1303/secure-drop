@@ -36,5 +36,5 @@ def udpServer(userEmail, stop_threads):
     else:
       print("----- Received a broadcast from myself -----")
 
-    if stop_threads == False:
+    if stop_threads == True:
       break
