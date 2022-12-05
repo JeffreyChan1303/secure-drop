@@ -1,5 +1,4 @@
 import json
-from src.tcpclient import tcpClient
 # PGP, Generate private and public RSA key when creating an acount
 # Generate AES Key when generating message with noince, and tag.
 
@@ -13,8 +12,8 @@ def sendMessage():
     #       use PGP (pretty good privacy) for the file encryption
     # 6. Close the connection
 
-    with open("./data/nearbyUsers.json", "r") as fp:
-        nearbyUsers= json.load(fp)
+    with open("./data/nearbyContacts.json", "r") as NCfp:
+        nearbyUsers= json.load(NCfp)
         print("\n Email | IP Address | Port \n")
         for email in nearbyUsers:
             print(email, "|", nearbyUsers[email]['ip'],"|", nearbyUsers[email]['port'])

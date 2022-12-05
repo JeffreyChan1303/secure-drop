@@ -1,7 +1,7 @@
 import json
 import socket
 from time import sleep
-from src.tcpserver import tcpServer
+from src.tcpServerList import tcpServerList
 
 def listContacts(userEmail):
   UDPsocket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) ## AF_INET is family of protocols. SOCK_DGRAM is a type that for connectionless protocols
@@ -11,7 +11,10 @@ def listContacts(userEmail):
   UDPsocket.sendto(msg, ("255.255.255.255",port))
   print(f"Broadcasted a 'List Request' to (255.255.255.255, {port})")
 
-  # Start tcp server
+  with open("./data/nearbyContacts.json", "w") as NCfp:
+    nearbyContacts = {}
+    json.dump(nearbyContacts, NCfp)
+
   print("Waiting 3 seconds for responses... ")
   sleep(3)
 

@@ -1,5 +1,5 @@
 import socket
-from src.tcpclient import tcpClient
+from src.tcpClient import tcpClient
 
 '''
 This is a background thread that runs and continuously picks broadcasts and thier respective ip adresses

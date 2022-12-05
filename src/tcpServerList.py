@@ -3,7 +3,8 @@ import json
 
 
 # open tcp server on a specific host, and port number.
-def tcpServer(userEmail):
+def tcpServerList(userEmail):
+    print("TCP STARTED")
     emailReply = ""
 
     # sets up the options and address for the TCP socket
@@ -13,7 +14,12 @@ def tcpServer(userEmail):
     port = 25565
     TCPsocket.bind((host,port))
     TCPsocket.listen(10)
-    server,addr = TCPsocket.accept()
+    TCPsocket.settimeout(3)
+
+    try: 
+        server,addr = TCPsocket.accept()
+    except TimeoutError:
+        return
    
     # listening for "List Reply" or "Both contacts verified"
     while True:
@@ -54,5 +60,6 @@ def tcpServer(userEmail):
             server.close()
             break
 
-    print("While loop broken")
+    print("tcpServerList closed")
     return
+
