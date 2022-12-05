@@ -1,5 +1,5 @@
 import socket
-from src.tcpClient import tcpClient
+from src.tcpClientList import tcpClientList
 
 '''
 This is a background thread that runs and continuously picks broadcasts and thier respective ip adresses
@@ -32,7 +32,7 @@ def udpServer(userEmail, stop_threads):
     if msg[0] == "List Request" and not(str(addr[0]) == str(userIP) or str(addr[0]) == "127.0.0.1"):
       print(f"Received a 'List Request' from ({addr[0]}, {addr[1]})")
       # start tcp client and transfer email
-      tcpClient(userEmail, addr[0], "List Reply")
+      tcpClient(userEmail, addr[0])
     else:
       print("----- Received a broadcast from myself -----")
 
