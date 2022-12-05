@@ -14,16 +14,17 @@ def tcpServerFile(stop_threads):
 
     while True:
         msg = server.recv(1024)
-        msg = msg.decode("utf-8").split(",")
+        msg = msg.decode("utf-8")
 
         if stop_threads == True:
             server.close()
             break
 
-        if msg[0] == "File Send":
-            print(f"Received a 'File Send from '{addr[0]}, {addr[1]}'")
-            with open("/storage/output.txt", "w") as OUTfp:
-                json.dump(OUTfp, msg[1])
+        if msg == "File Send":
+            plainText = server.recv(1024)
+            print(f"Received a 'File Send' from '{addr[0]}, {addr[1]}'")
+            with open("./storage/output.txt", "wb") as OUTfp:
+                OUTfp.write(plainText)
 
             server.close()
             break
