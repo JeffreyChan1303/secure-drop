@@ -11,7 +11,6 @@ def tcpClientFile(userEmail, targetIP):
     port = 25575
     TCPsocket.connect((host,port))
 
-    TCPsocket.send(bytes("File sent!"))
-    print("Sent file!")
-    TCPsocket.close()
+    TCPsocket.send(bytes("File sent!", "utf-8"))
+    print(f"Sent a 'File sent!' to ({host}, {port})")
     return

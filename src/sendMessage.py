@@ -26,6 +26,7 @@ def sendMessage(userEmail):
         targetEmail = input("type email to send file to: ").strip()
 
     targetIP = nearbyContacts[targetEmail]["ip"]
+    print(targetIP)
     tcpClientFile(userEmail, targetIP)
 
     return

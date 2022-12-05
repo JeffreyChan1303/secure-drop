@@ -26,6 +26,7 @@ def tcpClientList(userEmail, targetIP):
             if msg[1] in allContacts:
                 print(f"Sent a 'Both Contacts Verified' to ({host}, {port})")
                 TCPsocket.send(bytes("Both Contacts Verified", "utf-8"))  
+                TCPsocket.close()
             else:
                 print(f"Sent a 'Contact Not Verifeid' to ({host}, {port})")
                 TCPsocket.send(bytes("Contact Not Verified", "utf-8"))
