@@ -1,4 +1,5 @@
 import socket
+import json
 
 
 def tcpServerFile(stop_threads):
@@ -13,16 +14,17 @@ def tcpServerFile(stop_threads):
 
     while True:
         msg = server.recv(1024)
-        msg = msg.decode("utf-8")
+        msg = msg.decode("utf-8").split(",")
 
         if stop_threads == True:
             server.close()
             break
 
-        print(msg)
+        if msg[0] == "File Send":
+            print(f"Received a 'File Send from '{addr[0]}, {addr[1]}'")
+            with open("/storage/output.txt", "w") as OUTfp:
+                json.dump(OUTfp, msg[1])
 
-        if msg == "File sent!":
-            print("Received file")
             server.close()
             break
 

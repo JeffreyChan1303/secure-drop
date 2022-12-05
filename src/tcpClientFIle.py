@@ -11,6 +11,13 @@ def tcpClientFile(userEmail, targetIP):
     port = 25575
     TCPsocket.connect((host,port))
 
-    TCPsocket.send(bytes("File sent!", "utf-8"))
+    directory = input("Enter the location of the file you wish to send: ")
+    fileBytes = ''
+
+    with open(directory, "r") as DIRfp:
+        fileBytes = DIRfp.read()
+    
+    TCPsocket.send(bytes("File send", fileBytes, "utf-8"))
+
     print(f"Sent a 'File sent!' to ({host}, {port})")
     return
