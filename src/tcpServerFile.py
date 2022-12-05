@@ -1,5 +1,6 @@
 import socket
 
+
 def tcpServerFile(stop_threads):
     # sets up the options and address for the TCP socket
     TCPsocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -8,14 +9,6 @@ def tcpServerFile(stop_threads):
     port = 25575
     TCPsocket.bind((host,port))
     TCPsocket.listen(10)
-    TCPsocket.settimeout(3)
-
-    try: 
-        server,addr = TCPsocket.accept()
-    except TimeoutError:
-        print("---TIMEOUT ERROR--- tcpServerFile()")
-        return
-
     server,addr = TCPsocket.accept()
 
     while True:

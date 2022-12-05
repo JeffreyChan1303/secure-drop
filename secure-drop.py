@@ -10,6 +10,7 @@ def main():
   
   serverThreadUDP = threading.Thread(target=src.udpServer, args=(userEmail, stop_threads))
   serverThreadTCPList = threading.Thread(target=src.tcpServerList, args=(userEmail,))
+  serverThreadTCPFile = threading.Thread(target=src.tcpServerFile, args=(stop_threads,))
   serverThreadUDP.start()
 
   print("\n\nWelcome to Secure Drop")
@@ -32,13 +33,17 @@ def main():
       serverThreadTCPList = threading.Thread(target=src.tcpServerList, args=(userEmail,))
 
     elif command == "send":
+      serverThreadTCPList.start()
+      src.listContacts(userEmail)
+      serverThreadTCPList.join()
       src.sendMessage()
 
     elif command == "exit": 
       stop_threads = True
       serverThreadUDP.join()
+      serverThreadTCPFile.join()
       return
-      
+
     else:
       print(f"\n'{command}' is not a valid command")
       displayCommands()
