@@ -1,6 +1,13 @@
 import socket
 import json
 
+def toBytes16(msg):
+    if len(msg.encode('utf-8')) > 16:
+        print("This is not possible!")
+    else:
+        str2 = '{0: <16}'.format(msg)    # adds needed space to the beginnig of str
+        return str2.encode('utf-8')
+    return ''
 
 # establish tcp connection with specific host and port number
 def tcpClientFile(userEmail, targetIP):
@@ -17,8 +24,8 @@ def tcpClientFile(userEmail, targetIP):
     with open(directory, "rb") as DIRfp:
         plainText = DIRfp.read()
     
-    TCPsocket.send(bytes("File Send", "utf-8"))
-    TCPsocket.send(bytes(plainText))
+    byteMsg = toBytes16("File Send")
+    TCPsocket.send(b''.join([byteMsg,plainText]))
 
     print(f"Sent a 'File sent!' to ({host}, {port})")
     return
