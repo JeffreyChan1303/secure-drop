@@ -1,10 +1,12 @@
 {
   "jeff@gmail.com": {
     "fullName": "Jeffrey Chan",
-    "password": "$2b$12$FQKq.ODNHIyauy6m8XkBYeCdc.v9P98c5em2a1INqkCKfGw0Kaoim"
+    "password": "$2b$12$FQKq.ODNHIyauy6m8XkBYeCdc.v9P98c5em2a1INqkCKfGw0Kaoim",
+    "certificate": "jeffreychan.crt"
   },
   "john@gmail.com": {
     "fullName": "John Lee",
-    "password": "$2b$12$EbcC8ZtoDyLuk04oc3rse.nf1ZrMwM0LYemqH5yIfHJI09Vx2iaDK"
+    "password": "$2b$12$EbcC8ZtoDyLuk04oc3rse.nf1ZrMwM0LYemqH5yIfHJI09Vx2iaDK",
+    "certificate": "johnlee.crt"
   }
 }

@@ -56,11 +56,17 @@ def userRegistration(users):
     bPassword = password.encode("utf-8")
 
     print("\nPassword is valid.")
+
+    # make route to cert
+    certificate = fullName.lower()
+    certificate.replace(" ", "")
+    certificate = certificate + ".crt"
     
     # add user into the json file
     users[email] = {
         "fullName": fullName,
-        "password": bcrypt.hashpw(bPassword, bcrypt.gensalt()).decode("utf-8")
+        "password": bcrypt.hashpw(bPassword, bcrypt.gensalt()).decode("utf-8"),
+        "certificate": certificate
     }
     with open("./data/users.json", "w") as fp:
         json.dump(users, fp, indent=2)
