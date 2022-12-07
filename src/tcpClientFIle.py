@@ -1,5 +1,5 @@
 import socket
-import json
+from os.path import exists
 
 def toBytes16(msg):
     if len(msg.encode('utf-8')) > 16:
@@ -20,14 +20,17 @@ def tcpClientFile(userEmail, targetIP):
 
     directory = input("Enter the location of the file you wish to send: ")
     fileType = "." + directory.split(".")[-1]
+    while not exists(directory):
+        directory = input(f"Bad file path {directory} \nEnter the location of the file you wish to send: ")
+        fileType = "." + directory.split(".")[-1]
 
-    with open(directory, "rb") as DIRfp:
-        fileContent = DIRfp.read()
-    
-    byteMsg = toBytes16("File Send")
-    byteMsgType = toBytes16(fileType)
+        with open(directory, "rb") as DIRfp:
+            fileContent = DIRfp.read()
+        
+        byteMsg = toBytes16("File Send")
+        byteMsgType = toBytes16(fileType)
 
-    TCPsocket.send(b''.join([byteMsg, byteMsgType, fileContent]))
+        TCPsocket.send(b''.join([byteMsg, byteMsgType, fileContent]))
 
-    print(f"Sent a 'File sent!' to ({host}, {port})")
-    return
+        print(f"Sent a 'File sent!' to ({host}, {port})")
+        return
