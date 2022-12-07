@@ -1,6 +1,9 @@
 import socket
 import json
+import ssl
 
+context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+context.load_cert_chain("data\issued\ca.crt","data\private\ca.key", 'secure-dropSJJ')
 
 # open tcp server on a specific host, and port number.
 def tcpServerList(userEmail):

@@ -1,9 +1,21 @@
 import socket
 import json
+import ssl
 
 
 # establish tcp connection with specific host and port number
 def tcpClientList(userEmail, targetIP):
+
+    context=ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    context = ssl._create_unverified_context()
+
+    with open("users.json", "r") as usersfp:
+         user = json.load(usersfp)
+         cert = user[userEmail]["certificate"]
+
+    context.load_verify_locations("data\issued\\" + cert)
+
+
     # sets up the options and address for the TCP socket
     TCPsocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     TCPsocket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)

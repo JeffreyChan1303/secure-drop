@@ -1,6 +1,9 @@
 import socket
 import json
+import ssl
 
+context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+context.load_cert_chain("data\issued\ca.crt","data\private\ca.key", 'secure-dropSJJ')
 
 def tcpServerFile(stop_threads):
     # sets up the options and address for the TCP socket
