@@ -1,4 +1,5 @@
 import socket
+from os.path import exists
 import json
 import ssl
 
@@ -31,7 +32,10 @@ def tcpClientFile(userEmail, targetIP):
         TCPsocket.connect((host,port))
         ssock = context.wrap_socket(TCPsocket,server_hostname = userEmail)
 
-        directory = input("Enter the location of the file you wish to send: ")
+    directory = input("Enter the location of the file you wish to send: ")
+    fileType = "." + directory.split(".")[-1]
+    while not exists(directory):
+        directory = input(f"Bad file path {directory} \nEnter the location of the file you wish to send: ")
         fileType = "." + directory.split(".")[-1]
 
         with open(directory, "rb") as DIRfp:
