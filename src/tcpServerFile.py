@@ -13,30 +13,36 @@ def tcpServerFile(stop_threads):
     port = 25575
     TCPsocket.bind((host,port))
     TCPsocket.listen(10)
-    server,addr = TCPsocket.accept()
 
-    while True:
-        msg = server.recv(4096)
-        print(f"Received a 'File Send' from '{addr[0]}, {addr[1]}'")
 
-        # decode the 2 part message
-        msgHeader = msg[:16].decode("utf-8").strip()
-        msgType = msg[16:32].decode("utf-8").strip()
-        content = msg[32:]
+    with context.wrap_socket(TCPsocket,server_side=True) as ssock:
+        while True:
 
-        print("length: ", len(msg))
-        print("msg Header: ",msgHeader)
-        # print("msg Content: ", content.decode("utf-8").strip())
+            server,addr = ssock.accept()
+            print("Accept connection from: ",addr)
+            print("Connection built from ", server.getsockname(), " and ", server.getpeername())
 
-        if stop_threads == True:
-            server.close()
-            break
+            msg = server.recv(4096)
+            print(f"Received a 'File Send' from '{addr[0]}, {addr[1]}'")
 
-        if msgHeader == "File Send":
-            with open(f"./storage/output{msgType}", "wb") as OUTfp:
-                OUTfp.write(content)
-            server.close()
-            break
+            # decode the 2 part message
+            msgHeader = msg[:16].decode("utf-8").strip()
+            msgType = msg[16:32].decode("utf-8").strip()
+            content = msg[32:]
+
+            print("length: ", len(msg))
+            print("msg Header: ",msgHeader)
+            # print("msg Content: ", content.decode("utf-8").strip())
+
+            if stop_threads == True:
+                server.close()
+                break
+
+            if msgHeader == "File Send":
+                with open(f"./storage/output{msgType}", "wb") as OUTfp:
+                    OUTfp.write(content)
+                server.close()
+                break
 
     print("tcpServerFile closed")
     return
