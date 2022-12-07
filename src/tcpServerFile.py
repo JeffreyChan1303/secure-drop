@@ -13,19 +13,24 @@ def tcpServerFile(stop_threads):
     server,addr = TCPsocket.accept()
 
     while True:
-        msg = server.recv(1024)
+        msg = server.recv(4096)
         print(f"Received a 'File Send' from '{addr[0]}, {addr[1]}'")
 
         # decode the 2 part message
         msgHeader = msg[:16].decode("utf-8").strip()
-        content = msg[16:]
+        msgType = msg[16:32].decode("utf-8").strip()
+        content = msg[32:]
+
+        print("length: ", len(msg))
+        print("msg Header: ",msgHeader)
+        # print("msg Content: ", content.decode("utf-8").strip())
 
         if stop_threads == True:
             server.close()
             break
 
         if msgHeader == "File Send":
-            with open("./storage/output.txt", "wb") as OUTfp:
+            with open(f"./storage/output{msgType}", "wb") as OUTfp:
                 OUTfp.write(content)
             server.close()
             break
