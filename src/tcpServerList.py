@@ -46,14 +46,17 @@ def tcpServerList(userEmail):
         if msg[0] == "Both Contacts Verified":
             print("Received a 'Both Contacts Verified'...Closing TCP server")
             with open("./data/nearbyContacts.json", "w") as NCfp:
-                nearbyContacts = {}
-                nearbyContacts[emailReply] = {
-                    "ip": addr[0]
-                }
-                json.dump(nearbyContacts, NCfp)
+                with open("./data/contacts.json", "r") as Cfp:
+                    contacts = json.load(Cfp)
+                    nearbyContacts = {}
+                    nearbyContacts[emailReply] = {
+                        "fullName": contacts[userEmail][emailReply]["fullName"],
+                        "ip": addr[0]
+                    }
+                    json.dump(nearbyContacts, NCfp)
             server.close()
             break
-          
+        
         # if the message is "Contact not verified"
         if msg[0] == "Contact Not Verified":
             print("Received a 'Contact Not Verified'...Closing TCP server")

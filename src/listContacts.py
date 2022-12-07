@@ -20,11 +20,14 @@ def listContacts(userEmail):
 
   # here print out the nearby users
   with open("./data/nearbyContacts.json", "r") as NCfp:
-    nearbyContacts= json.load(NCfp)
-    print("\nEmail | IP Address")
-    if len(nearbyContacts) == 0:
-      print("No Contacts Online.\n")
-    for email in nearbyContacts:
-      print(email, "|", nearbyContacts[email]['ip'])
+    with open("./data/contacts.json", "r") as Cfp:
+      nearbyContacts= json.load(NCfp)
+      contacts = json.load(Cfp)
+      print("\nFull Name | Email | IP Address")
+      if len(nearbyContacts) == 0:
+        print("No Contacts Online.\n")
+      for email in nearbyContacts:
+        fullName = contacts[userEmail][email]['fullName']
+        print(fullName, "|", email, "|", nearbyContacts[email]['ip'])
       
   return

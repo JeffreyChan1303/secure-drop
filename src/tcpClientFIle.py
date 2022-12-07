@@ -24,13 +24,13 @@ def tcpClientFile(userEmail, targetIP):
         directory = input(f"Bad file path {directory} \nEnter the location of the file you wish to send: ")
         fileType = "." + directory.split(".")[-1]
 
-        with open(directory, "rb") as DIRfp:
-            fileContent = DIRfp.read()
-        
-        byteMsg = toBytes16("File Send")
-        byteMsgType = toBytes16(fileType)
+    with open(directory, "rb") as DIRfp:
+        fileContent = DIRfp.read()
+    
+    byteMsg = toBytes16("File Send")
+    byteMsgType = toBytes16(fileType)
 
-        TCPsocket.send(b''.join([byteMsg, byteMsgType, fileContent]))
+    TCPsocket.send(b''.join([byteMsg, byteMsgType, fileContent]))
 
-        print(f"Sent a 'File sent!' to ({host}, {port})")
-        return
+    print(f"Sent a 'File sent!' to ({host}, {port})")
+    return

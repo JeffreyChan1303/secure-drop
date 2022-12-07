@@ -13,20 +13,23 @@ def sendMessage(userEmail):
     # 5. Encrypt and send the file
     #       use PGP (pretty good privacy) for the file encryption
     # 6. Close the connection
-
+    targetEmail = ''
+    
     with open("./data/nearbyContacts.json", "r") as NCfp:
         nearbyContacts= json.load(NCfp)
         if len(nearbyContacts) is not 0:
-            targetEmail = input("type email to send file to: ").strip()
+            while targetEmail not in nearbyContacts:
+                inputName = input("Type a name to send file to them: ").strip()
+                for contact in nearbyContacts:
+                    contactName = nearbyContacts[contact]["fullName"]
+                    if contactName == inputName:
+                        targetEmail = contact
+
+                if targetEmail not in nearbyContacts:
+                    print("'" + inputName + "' is not online.\n")
+
+            targetIP = nearbyContacts[targetEmail]["ip"]
+            print(targetIP)
+            tcpClientFile(userEmail, targetIP)
         else:
             return
-
-    while targetEmail not in nearbyContacts:
-        print("'"+targetEmail+"' is not online. Please enter a valid email: ")
-        targetEmail = input("type email to send file to: ").strip()
-
-    targetIP = nearbyContacts[targetEmail]["ip"]
-    print(targetIP)
-    tcpClientFile(userEmail, targetIP)
-
-    return
