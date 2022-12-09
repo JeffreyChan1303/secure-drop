@@ -14,12 +14,15 @@ def tcpServerList(userEmail):
     port = 25565
     TCPsocket.bind((host,port))
     TCPsocket.listen(10)
-    server, addr = TCPsocket.accept()
+    TCPsocket.settimeout(4)
 
     # listening for "List Reply" or "Both contacts verified"
     while True:
         print("TCP server listening at ", TCPsocket.getsockname())
-
+        try:
+            server, addr = TCPsocket.accept()
+        except TimeoutError:
+            return
         msg = server.recv(1024)
         msg = msg.decode("utf-8").split(",")
 
@@ -35,8 +38,9 @@ def tcpServerList(userEmail):
                 else:
                     print(f"Sent a 'Contact Not Verified' to ({addr[0]}, {port})")
                     server.send(bytes(f"Contact Not Verified", "utf-8"))
-                    server.close()
-                    break
+                    return
+        
+        msg = server.recv(1024)
 
         # if the message is "Both contacts verified"
         if msg[0] == "Both Contacts Verified":
@@ -50,13 +54,11 @@ def tcpServerList(userEmail):
                         "ip": addr[0]
                     }
                     json.dump(nearbyContacts, NCfp)
-            server.close()
             break
 
         # if the message is "Contact not verified"
         if msg[0] == "Contact Not Verified":
             print("Received a 'Contact Not Verified'...Closing TCP server")
-            server.close()
             break
 
     print("tcpServerList closed")
