@@ -3,21 +3,21 @@ import threading
 
 
 def main():
-  stop_threads = False
   # login to application, stores the userEmail for future use
   # userEmail = src.userLogin()
   userEmail = "john@gmail.com"
   
-  serverThreadUDP = threading.Thread(target=src.udpServer, args=(userEmail, stop_threads))
+  serverThreadUDP = threading.Thread(target=src.udpServer, args=(userEmail, ))
   serverThreadTCPList = threading.Thread(target=src.tcpServerList, args=(userEmail,))
-  serverThreadTCPFile = threading.Thread(target=src.tcpServerFile, args=(stop_threads,))
+  serverThreadTCPFile = threading.Thread(target=src.tcpServerFile)
+  serverThreadUDP.daemon = True
+  serverThreadTCPFile.daemon = True
   serverThreadUDP.start()
   serverThreadTCPFile.start()
 
   print("\n\nWelcome to Secure Drop")
   print("Type 'help' for commands\n")
 
-  # Shell loop
   while True:
     command = input("secure_drop> ")
 
@@ -40,9 +40,7 @@ def main():
       src.sendMessage(userEmail)
 
     elif command == "exit": 
-      stop_threads = True
-      serverThreadUDP.join()
-      serverThreadTCPFile.join()
+      print("Exiting Secure Drop...\n")
       return
 
     else:

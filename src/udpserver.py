@@ -5,10 +5,7 @@ from src.tcpClientList import tcpClientList
 This is a background thread that runs and continuously picks broadcasts and thier respective ip adresses
 '''
 
-def udpServer(userEmail, stop_threads):
-  # resets nearby users on successful login
-  nearbyUsers = {}
-
+def udpServer(userEmail):
   # sets up the options and address for the UDP socket
   UDPsocket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM, socket.IPPROTO_UDP)
   UDPsocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
@@ -35,6 +32,3 @@ def udpServer(userEmail, stop_threads):
       tcpClientList(userEmail, addr[0])
     else:
       print("----- Received a broadcast from myself -----")
-
-    if stop_threads == True:
-      break
