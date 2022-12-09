@@ -22,6 +22,7 @@ def tcpServerList(userEmail):
         try:
             server, addr = TCPsocket.accept()
         except TimeoutError:
+            print("Timeout for tcpServerList")
             return
         msg = server.recv(1024)
         msg = msg.decode("utf-8").split(",")
@@ -38,29 +39,24 @@ def tcpServerList(userEmail):
                 else:
                     print(f"Sent a 'Contact Not Verified' to ({addr[0]}, {port})")
                     server.send(bytes(f"Contact Not Verified", "utf-8"))
-                    return
         
         msg = server.recv(1024)
+        msg = msg.decode("utf-8")
 
         # if the message is "Both contacts verified"
-        if msg[0] == "Both Contacts Verified":
+        if msg == "Both Contacts Verified":
             print("Received a 'Both Contacts Verified'...Closing TCP server")
-            with open("./data/nearbyContacts.json", "w") as NCfp:
-                with open("./data/contacts.json", "r") as Cfp:
-                    contacts = json.load(Cfp)
-                    nearbyContacts = {}
-                    nearbyContacts[emailReply] = {
-                        "fullName": contacts[userEmail][emailReply]["fullName"],
-                        "ip": addr[0]
-                    }
-                    json.dump(nearbyContacts, NCfp)
-            break
+            with open("./data/nearbyContacts.json", "r") as NCfpR:
+                nearbyContacts = json.load(NCfpR)
+                with open("./data/nearbyContacts.json", "w") as NCfpW:
+                    with open("./data/contacts.json", "r") as Cfp:
+                        contacts = json.load(Cfp)
+                        nearbyContacts[emailReply] = {
+                            "fullName": contacts[userEmail][emailReply]["fullName"],
+                            "ip": addr[0]
+                        }
+                        json.dump(nearbyContacts, NCfpW)
 
         # if the message is "Contact not verified"
-        if msg[0] == "Contact Not Verified":
+        if msg == "Contact Not Verified":
             print("Received a 'Contact Not Verified'...Closing TCP server")
-            break
-
-    print("tcpServerList closed")
-    return
-
