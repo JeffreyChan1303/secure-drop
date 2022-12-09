@@ -31,7 +31,10 @@ def tcpServerFile():
             # print("msg Content: ", content.decode("utf-8").strip())
 
             if msgHeader == "File Send":
-                with open(f"./storage/output{msgType}", "wb") as OUTfp:
+                nameOfFile = ''
+                while len(nameOfFile == 0):
+                    nameOfFile = input(f"The incoming file type is '{msgType}', enter the name of this incoming file: ")
+                with open(f"./storage/{nameOfFile}{msgType}", "wb") as OUTfp:
                     OUTfp.write(content)
                 server.close()
                 break
