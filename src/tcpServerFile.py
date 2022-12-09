@@ -23,18 +23,15 @@ def tcpServerFile():
 
             # decode the 2 part message
             msgHeader = msg[:16].decode("utf-8").strip()
-            msgType = msg[16:32].decode("utf-8").strip()
-            content = msg[32:]
+            msgFile = msg[16:48].decode("utf-8").strip()
+            content = msg[48:]
 
             print("length: ", len(msg))
             print("msg Header: ",msgHeader)
             # print("msg Content: ", content.decode("utf-8").strip())
 
             if msgHeader == "File Send":
-                nameOfFile = ''
-                while len(nameOfFile == 0):
-                    nameOfFile = input(f"The incoming file type is '{msgType}', enter the name of this incoming file: ")
-                with open(f"./storage/{nameOfFile}{msgType}", "wb") as OUTfp:
+                with open(f"./storage/{msgFile}", "wb") as OUTfp:
                     OUTfp.write(content)
                 server.close()
                 break

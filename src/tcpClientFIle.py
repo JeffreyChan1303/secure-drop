@@ -10,6 +10,14 @@ def toBytes16(msg):
         return str2.encode('utf-8')
     return ''
 
+def toBytes32(msg):
+    if len(msg.encode('utf-8')) > 32:
+        print("This is not possible!")
+    else:
+        str2 = '{0: <16}'.format(msg)    # adds needed space to the beginnig of str
+        return str2.encode('utf-8')
+    return ''
+
 # establish tcp connection with specific host and port number
 def tcpClientFile(userEmail, targetIP):
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
@@ -24,18 +32,18 @@ def tcpClientFile(userEmail, targetIP):
         ssock = context.wrap_socket(TCPsocket, server_hostname = "localhost")
 
         directory = input("Enter the location of the file you wish to send: ")
-        fileType = "." + directory.split(".")[-1]
+        fileName = "." + directory.split(".")[-1]
         while not exists(directory):
             directory = input(f"Bad file path {directory} \nEnter the location of the file you wish to send: ")
-            fileType = "." + directory.split(".")[-1]
+            fileName = "." + directory.split(".")[-1]
 
         with open(directory, "rb") as DIRfp:
             fileContent = DIRfp.read()
         
         byteMsg = toBytes16("File Send")
-        byteMsgType = toBytes16(fileType)
+        byteMsgName = toBytes32(fileName)
 
-        ssock.send(b''.join([byteMsg, byteMsgType, fileContent]))
+        ssock.send(b''.join([byteMsg, byteMsgName, fileContent]))
 
         print(f"Sent a 'File sent!' to ({host}, {port})")
         return
