@@ -1,8 +1,10 @@
 import socket
 import json
-
+import ssl
 
 def tcpServerFile():
+    context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain("certs/pki/issued/ca.crt","certs/pki/private/ca.key", 'secure-dropSJJ')
     server = ''
     addr = ''
     # sets up the options and address for the TCP socket
@@ -13,25 +15,26 @@ def tcpServerFile():
     TCPsocket.bind((host,port))
     TCPsocket.listen(10)
     
-    while True:
-        server, addr = TCPsocket.accept()
-        msg = server.recv(4096)
-        print(f"Received a 'File Send' from '{addr[0]}, {addr[1]}'")
+    with context.wrap_socket(TCPsocket,server_side=True) as ssock:
+        while True:
+            server, addr = ssock.accept()
+            msg = server.recv(4096)
+            print(f"Received a 'File Send' from '{addr[0]}, {addr[1]}'")
 
-        # decode the 2 part message
-        msgHeader = msg[:16].decode("utf-8").strip()
-        msgType = msg[16:32].decode("utf-8").strip()
-        content = msg[32:]
+            # decode the 2 part message
+            msgHeader = msg[:16].decode("utf-8").strip()
+            msgType = msg[16:32].decode("utf-8").strip()
+            content = msg[32:]
 
-        print("length: ", len(msg))
-        print("msg Header: ",msgHeader)
-        # print("msg Content: ", content.decode("utf-8").strip())
+            print("length: ", len(msg))
+            print("msg Header: ",msgHeader)
+            # print("msg Content: ", content.decode("utf-8").strip())
 
-        if msgHeader == "File Send":
-            with open(f"./storage/output{msgType}", "wb") as OUTfp:
-                OUTfp.write(content)
-            server.close()
-            break
+            if msgHeader == "File Send":
+                with open(f"./storage/output{msgType}", "wb") as OUTfp:
+                    OUTfp.write(content)
+                server.close()
+                break
 
-    print("tcpServerFile closed")
-    return
+        print("tcpServerFile closed")
+        return
