@@ -3,7 +3,8 @@ import json
 
 
 # open tcp server on a specific host, and port number.
-def tcpServer(userEmail):
+def tcpServerList(userEmail):
+    print("TCP STARTED")
     emailReply = ""
 
     # sets up the options and address for the TCP socket
@@ -13,11 +14,12 @@ def tcpServer(userEmail):
     port = 25565
     TCPsocket.bind((host,port))
     TCPsocket.listen(10)
-    server,addr = TCPsocket.accept()
-   
+    server, addr = TCPsocket.accept()
+
     # listening for "List Reply" or "Both contacts verified"
     while True:
         print("TCP server listening at ", TCPsocket.getsockname())
+
         msg = server.recv(1024)
         msg = msg.decode("utf-8").split(",")
 
@@ -40,19 +42,23 @@ def tcpServer(userEmail):
         if msg[0] == "Both Contacts Verified":
             print("Received a 'Both Contacts Verified'...Closing TCP server")
             with open("./data/nearbyContacts.json", "w") as NCfp:
-                nearbyContacts = {}
-                nearbyContacts[emailReply] = {
-                    "ip": addr[0]
-                }
-                json.dump(nearbyContacts, NCfp)
+                with open("./data/contacts.json", "r") as Cfp:
+                    contacts = json.load(Cfp)
+                    nearbyContacts = {}
+                    nearbyContacts[emailReply] = {
+                        "fullName": contacts[userEmail][emailReply]["fullName"],
+                        "ip": addr[0]
+                    }
+                    json.dump(nearbyContacts, NCfp)
             server.close()
             break
-          
+
         # if the message is "Contact not verified"
         if msg[0] == "Contact Not Verified":
             print("Received a 'Contact Not Verified'...Closing TCP server")
             server.close()
             break
 
-    print("While loop broken")
+    print("tcpServerList closed")
     return
+
