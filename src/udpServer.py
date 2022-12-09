@@ -26,7 +26,7 @@ def udpServer(userEmail):
 
     print("----- Incoming IP: " + addr[0] + " | Server IP: " + userIP + " -----")
     # if another user sends "List Request", it will send "List Reply"
-    if msg[0] == "List Request" and not(str(addr[0]) == str(userIP) or str(addr[0]) == "127.0.0.1"):
+    if msg[0] == "List Request" and not(str(addr[0]) == str(userIP)):
       print(f"Received a 'List Request' from ({addr[0]}, {addr[1]})")
       # start tcp client and transfer email
       tcpClientList(userEmail, addr[0])
