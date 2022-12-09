@@ -7,7 +7,7 @@ def tcpServerList(userEmail):
     print("TCP STARTED")
     emailReply = ""
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    context.load_cert_chain("certs/pki/issued/ca.crt","certs/pki/private/ca.key", 'secure-dropSJJ')
+    context.load_cert_chain("./certs/pki/issued/ca.crt","./certs/pki/private/ca.key", 'secure-dropSJJ')
 
     # sets up the options and address for the TCP socket
     TCPsocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 

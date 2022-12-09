@@ -4,7 +4,7 @@ import ssl
 
 def tcpServerFile():
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    context.load_cert_chain("certs/pki/issued/ca.crt","certs/pki/private/ca.key", 'secure-dropSJJ')
+    context.load_cert_chain("./certs/pki/issued/ca.crt","./certs/pki/private/ca.key", 'secure-dropSJJ')
     server = ''
     addr = ''
     # sets up the options and address for the TCP socket

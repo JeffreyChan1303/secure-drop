@@ -14,7 +14,7 @@ def toBytes16(msg):
 def tcpClientFile(userEmail, targetIP):
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context = ssl._create_unverified_context()
-    context.load_verify_locations("certs\pki\issued\samuelvilt.crt")
+    context.load_verify_locations("./certs/pki/issued/samuelvilt.crt")
     # sets up the options and address for the TCP socket
     with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as TCPsocket:
         TCPsocket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
