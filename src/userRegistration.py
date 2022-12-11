@@ -65,5 +65,4 @@ def userRegistration(users):
     with open("./data/users.json", "w") as fp:
         json.dump(users, fp, indent=2)
 
-    print("User registered. ")
-    return "Success"
+    print("User registered.\n")
