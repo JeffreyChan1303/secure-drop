@@ -1,6 +1,8 @@
 import socket
 from os.path import exists
 import ssl
+import time
+import json
 
 # convert string to 16 byteString
 def toBytes16(msg):
@@ -22,9 +24,18 @@ def toBytes32(msg):
 
 # establish tcp connection with specific host and port number
 def tcpClientFile(userEmail, targetIP, targetName):
+
+    with open("./data/users.json", "r") as Cfp:
+        data = json.load(Cfp)
+        userCert = data[userEmail]["fullName"]
+        userCert = userCert.lower()
+        userCert = userCert.replace(" ", "")
+
+    location = "./certs/pki/issued/" + userCert + ".crt"
+
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context = ssl._create_unverified_context()
-    context.load_verify_locations("./certs/pki/issued/samuelvilt.crt")
+    context.load_verify_locations(location)
 
     # sets up the options and address for the TCP socket
     with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as TCPsocket:
@@ -47,8 +58,9 @@ def tcpClientFile(userEmail, targetIP, targetName):
         byteMsg = toBytes16("File Send")
         byteMsgName = toBytes32(fileName)
         userEmail = toBytes32(userEmail)
+        byteTime = toBytes32(time.time())
 
-        ssock.send(b''.join([byteMsg, byteMsgName, userEmail,fileContent]))
+        ssock.send(b''.join([byteMsg, byteMsgName, userEmail, byteTime, fileContent]))
 
         msg = ssock.recv(1024)
 
