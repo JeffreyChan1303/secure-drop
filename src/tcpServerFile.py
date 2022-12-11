@@ -48,6 +48,6 @@ def tcpServerFile(userEmail):
 
                 with open(f"./storage/{msgFile}", "wb") as OUTfp:
                     OUTfp.write(content)
-                server.send(b"File Recieved", (addr[0], port))
+                server.send(b"File Accepted", (addr[0], port))
 
                 server.close()
