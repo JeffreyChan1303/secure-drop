@@ -6,7 +6,7 @@ def sendMessage(userEmail):
     
     with open("./data/nearbyContacts.json", "r") as NCfp:
         nearbyContacts= json.load(NCfp)
-        if len(nearbyContacts) is 0:
+        if len(nearbyContacts) == 0:
             return
 
         # find targetIP by passing in userName for the input

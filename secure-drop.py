@@ -5,7 +5,7 @@ import threading
 def main():
   # login to application, stores the userEmail for future use
   #userEmail = src.userLogin()
-  userEmail = "john@gmail.com" # REMOVE THIS LINE
+  userEmail = "jeff@gmail.com" # REMOVE THIS LINE
   if userEmail is None:
     return
   
