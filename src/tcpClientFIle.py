@@ -2,19 +2,21 @@ import socket
 from os.path import exists
 import ssl
 
+# convert string to 16 byteString
 def toBytes16(msg):
     if len(msg.encode('utf-8')) > 16:
         print("This is not possible!")
     else:
-        str2 = '{0: <16}'.format(msg)    # adds needed space to the beginnig of str
+        str2 = '{0: <16}'.format(msg) 
         return str2.encode('utf-8')
     return ''
 
+# convert string to 32 byteString
 def toBytes32(msg):
     if len(msg.encode('utf-8')) > 32:
         print("This is not possible!")
     else:
-        str2 = '{0: <32}'.format(msg)    # adds needed space to the beginnig of str
+        str2 = '{0: <32}'.format(msg) 
         return str2.encode('utf-8')
     return ''
 
@@ -23,6 +25,7 @@ def tcpClientFile(userEmail, targetIP):
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context = ssl._create_unverified_context()
     context.load_verify_locations("./certs/pki/issued/samuelvilt.crt")
+
     # sets up the options and address for the TCP socket
     with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as TCPsocket:
         TCPsocket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
@@ -31,6 +34,7 @@ def tcpClientFile(userEmail, targetIP):
         TCPsocket.connect((host,port))
         ssock = context.wrap_socket(TCPsocket, server_hostname = "localhost")
 
+        # select the file to send
         directory = input("Enter the name of the file you wish to send in the storage folder: ")
         fileName = directory.split("/")[-1]
         while not exists("./storage/" + directory):
