@@ -28,17 +28,11 @@ def tcpServerFile(userEmail):
             timestamp = msg[80: 112].decode("utf-8").strip()
             content = msg[112:]
 
-            print("length: ", len(msg))
-            print("msg Header: ",msgHeader)
-            print("msg Email: ", msgEmail)
-            print("timestamp:", timestamp)
-
             curtime = time.time()
 
             if timestamp > curtime + 2 and timestamp < curtime - 2:
                 print('Possible Replay Attack!')
                 server.close()
-
 
             if msgHeader == "File Send":
                 with open("./data/contacts.json", "r") as Cfp:
