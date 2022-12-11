@@ -14,7 +14,7 @@ def toBytes32(msg):
     if len(msg.encode('utf-8')) > 32:
         print("This is not possible!")
     else:
-        str2 = '{0: <16}'.format(msg)    # adds needed space to the beginnig of str
+        str2 = '{0: <32}'.format(msg)    # adds needed space to the beginnig of str
         return str2.encode('utf-8')
     return ''
 
@@ -31,13 +31,13 @@ def tcpClientFile(userEmail, targetIP):
         TCPsocket.connect((host,port))
         ssock = context.wrap_socket(TCPsocket, server_hostname = "localhost")
 
-        directory = input("Enter the location of the file you wish to send: ")
-        fileName = "." + directory.split(".")[-1]
-        while not exists(directory):
+        directory = input("Enter the name of the file you wish to send in the storage folder: ")
+        fileName = directory.split("/")[-1]
+        while not exists("./storage/" + directory):
             directory = input(f"Bad file path {directory} \nEnter the location of the file you wish to send: ")
-            fileName = "." + directory.split(".")[-1]
+            fileName = directory.split("/")[-1]
 
-        with open(directory, "rb") as DIRfp:
+        with open("./storage/" + directory, "rb") as DIRfp:
             fileContent = DIRfp.read()
         
         byteMsg = toBytes16("File Send")

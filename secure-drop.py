@@ -37,6 +37,7 @@ def main():
       serverThreadTCPList.start()
       src.listContacts(userEmail)
       serverThreadTCPList.join()
+      serverThreadTCPList = threading.Thread(target=src.tcpServerList, args=(userEmail,))
       src.sendMessage(userEmail)
 
     elif command == "exit": 

@@ -16,7 +16,7 @@ def tcpServerList(userEmail):
     port = 25565
     TCPsocket.bind((host,port))
     TCPsocket.listen(10)
-    TCPsocket.settimeout(4)
+    TCPsocket.settimeout(1)
 
     # listening for "List Reply" or "Both contacts verified"
     with context.wrap_socket(TCPsocket,server_side=True) as ssock:

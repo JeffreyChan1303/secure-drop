@@ -34,7 +34,3 @@ def tcpServerFile():
                 with open(f"./storage/{msgFile}", "wb") as OUTfp:
                     OUTfp.write(content)
                 server.close()
-                break
-
-        print("tcpServerFile closed")
-        return

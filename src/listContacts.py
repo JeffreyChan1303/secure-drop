@@ -15,8 +15,8 @@ def listContacts(userEmail):
     nearbyContacts = {}
     json.dump(nearbyContacts, NCfp)
 
-  print("Waiting 3 seconds for responses... ")
-  sleep(3)
+  print("Waiting 1 second for responses... ")
+  sleep(1)
 
   # here print out the nearby users
   with open("./data/nearbyContacts.json", "r") as NCfp:
