@@ -19,7 +19,6 @@ def tcpServerFile(userEmail):
         while True:
             server, addr = ssock.accept()
             msg = server.recv(4096)
-            print(f"Received a 'File Send' from '{addr[0]}, {addr[1]}'")
 
             # decode the 2 part message
             msgHeader = msg[:16].decode("utf-8").strip()
@@ -28,6 +27,7 @@ def tcpServerFile(userEmail):
             timestamp = msg[80: 112].decode("utf-8").strip()
             content = msg[112:]
 
+<<<<<<< HEAD
             print("length: ", len(msg))
             print("msg Header: ",msgHeader)
             print("msg Email: ", msgEmail)
@@ -40,6 +40,8 @@ def tcpServerFile(userEmail):
                 server.close()
 
 
+=======
+>>>>>>> bd4eced3e7bb4a7529c2e219888c24c282ed5036
             if msgHeader == "File Send":
                 with open("./data/contacts.json", "r") as Cfp:
                     contacts = json.load(Cfp)
@@ -49,14 +51,12 @@ def tcpServerFile(userEmail):
                 recInput = input(f"Contact '{msgFullName} <{msgEmail}>' is sending a file '{msgFile}'. Accept (y/n)?")
                 while recInput.lower() != 'y' or recInput.lower() != 'n':
                     recInput = input(f"Invalid input. \nContact '{msgFullName} <{msgEmail}>' is sending a file '{msgFile}'. Accept (y/n)?")
-                
-                if recInput.lower() == 'n':
-                    server.send(b"File Denied", (addr[0], port))
-                    return
-                
 
-                with open(f"./storage/{msgFile}", "wb") as OUTfp:
-                    OUTfp.write(content)
-                server.send(b"File Accepted", (addr[0], port))
+                if recInput.lower() == 'y':
+                    with open(f"./storage/{msgFile}", "wb") as OUTfp:
+                        OUTfp.write(content)
+                    server.send(b"File Accepted", (addr[0], port))
+                else:
+                    server.send(b"File Denied", (addr[0], port))
 
                 server.close()

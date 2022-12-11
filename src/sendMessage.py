@@ -11,7 +11,7 @@ def sendMessage(userEmail):
 
         # find targetIP by passing in userName for the input
         while targetEmail not in nearbyContacts:
-            inputName = input("Type a name to send file to them: ").strip()
+            inputName = input("\nEnter the name of the person you wish to send a file to: ").strip()
             for contact in nearbyContacts:
                 contactName = nearbyContacts[contact]["fullName"]
                 if contactName == inputName:
@@ -21,5 +21,4 @@ def sendMessage(userEmail):
                 print("'" + inputName + "' is not online.\n")
 
         targetIP = nearbyContacts[targetEmail]["ip"]
-        print(targetIP)
         tcpClientFile(userEmail, targetIP, inputName)
