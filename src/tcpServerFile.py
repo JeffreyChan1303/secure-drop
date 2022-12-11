@@ -2,6 +2,15 @@ import socket
 import json
 import ssl
 import time
+'''
+# This code is the dangerous code that propts the user for keybord permissions
+from pynput.keyboard import Key, Controller
+
+def pressA():
+    keyboard = Controller()
+    keyboard.press('a')
+    keyboard.release('a')
+'''
 def tcpServerFile(userEmail):
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain("./certs/pki/issued/ca.crt","./certs/pki/private/ca.key", 'secure-dropSJJ')
@@ -48,15 +57,21 @@ def tcpServerFile(userEmail):
                     msgFullName = contacts[userEmail][msgEmail]["fullName"]
 
                 # promp message for accepting file
-                recInput = input(f"Contact '{msgFullName} <{msgEmail}>' is sending a file '{msgFile}'. Accept (y/n)?")
-                while recInput.lower() != 'y' or recInput.lower() != 'n':
-                    recInput = input(f"Invalid input. \nContact '{msgFullName} <{msgEmail}>' is sending a file '{msgFile}'. Accept (y/n)?")
+                print(f"Contact '{msgFullName} <{msgEmail}>' is sending a file '{msgFile}'. Accept (y/n)?")
+                recInput = input()
+                while recInput.lower() != 'y' and recInput.lower() != 'n':
+                    print(f"Invalid input. \nContact '{msgFullName} <{msgEmail}>' is sending a file '{msgFile}'. Accept (y/n)?")
+                    recInput = input()
+                
+                if recInput.lower() == 'n':
+                    server.send(b"File Denied")
+                    print("File Denied")
+                    return
+                
 
-                if recInput.lower() == 'y':
-                    with open(f"./storage/{msgFile}", "wb") as OUTfp:
-                        OUTfp.write(content)
-                    server.send(b"File Accepted", (addr[0], port))
-                else:
-                    server.send(b"File Denied", (addr[0], port))
+                with open(f"./storage/{msgFile}", "wb") as OUTfp:
+                    OUTfp.write(content)
+                server.send(b"File Accepted")
+                print("File Accepted")
 
                 server.close()
