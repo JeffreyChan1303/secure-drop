@@ -21,7 +21,7 @@ def toBytes32(msg):
     return ''
 
 # establish tcp connection with specific host and port number
-def tcpClientFile(userEmail, targetIP):
+def tcpClientFile(userEmail, targetIP, targetName):
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context = ssl._create_unverified_context()
     context.load_verify_locations("./certs/pki/issued/samuelvilt.crt")
@@ -46,8 +46,17 @@ def tcpClientFile(userEmail, targetIP):
         
         byteMsg = toBytes16("File Send")
         byteMsgName = toBytes32(fileName)
+        userEmail = toBytes32(userEmail)
 
-        ssock.send(b''.join([byteMsg, byteMsgName, fileContent]))
+        ssock.send(b''.join([byteMsg, byteMsgName, userEmail,fileContent]))
+
+        msg = ssock.recv(1024)
+
+        if msg == "File Denied":
+            print(f"Your file '{directory}' was DENIED by '{targetName}'.")
+        
+        if msg == "File Accepted":
+            print(f"Your file '{directory}' was ACCEPTED by '{targetName}'.")
 
         print(f"Sent a 'File sent!' to ({host}, {port})")
         return

@@ -22,4 +22,4 @@ def sendMessage(userEmail):
 
         targetIP = nearbyContacts[targetEmail]["ip"]
         print(targetIP)
-        tcpClientFile(userEmail, targetIP)
+        tcpClientFile(userEmail, targetIP, inputName)
