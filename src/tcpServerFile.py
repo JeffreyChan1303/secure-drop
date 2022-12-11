@@ -52,15 +52,11 @@ def tcpServerFile(userEmail):
                     print(f"Invalid input. \nContact '{msgFullName} <{msgEmail}>' is sending a file '{msgFile}'. Accept (y/n)?")
                     recInput = input()
                 
-                if recInput.lower() == 'n':
+                if recInput.lower() == 'y':
+                    with open(f"./storage/{msgFile}", "wb") as OUTfp:
+                        OUTfp.write(content)
+                    server.send(b"File Accepted")
+                else:
                     server.send(b"File Denied")
-                    print("File Denied")
-                    return
-                
-
-                with open(f"./storage/{msgFile}", "wb") as OUTfp:
-                    OUTfp.write(content)
-                server.send(b"File Accepted")
-                print("File Accepted")
 
                 server.close()
