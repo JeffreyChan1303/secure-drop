@@ -10,7 +10,7 @@ def addContact(userEmail):
     else:
       userContacts = {}
 
-  print("\n  Adding a contact (enter 'exit' to quit):")
+  print("Adding a contact (enter 'exit' to quit):")
   fullName = input("  Enter Full Name: ").strip()
   if fullName == 'exit':
     return
@@ -27,4 +27,4 @@ def addContact(userEmail):
   allUserContacts[userEmail] = userContacts
   with open("./data/contacts.json", "w") as Cfp:
     json.dump(allUserContacts, Cfp, indent=2)
-    print(f"  Successfully added contact {email} as {fullName}.")
+    print(f"Successfully added contact {email} as {fullName}.")

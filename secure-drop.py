@@ -5,7 +5,7 @@ import threading
 def main():
   # login to application, stores the userEmail for future use
   #userEmail = src.userLogin()
-  userEmail = "jeff@gmail.com" # REMOVE THIS LINE
+  userEmail = "john@gmail.com" # REMOVE THIS LINE
   if userEmail is None:
     return
   
@@ -45,6 +45,9 @@ def main():
     elif command == "exit": 
       print("Exiting SecureDrop...\n")
       return
+
+    elif command.lower() == 'y' or command .lower() == 'n':
+      break
 
     else:
       print(f"\n'{command}' is not a valid command")

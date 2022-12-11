@@ -9,13 +9,12 @@ def listContacts(userEmail):
   msg = "List Request".encode("utf-8")
   UDPsocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
   UDPsocket.sendto(msg, ("255.255.255.255",port))
-  print(f"Broadcasted a 'List Request' to (255.255.255.255, {port})")
 
   with open("./data/nearbyContacts.json", "w") as NCfp:
     nearbyContacts = {}
     json.dump(nearbyContacts, NCfp)
 
-  print("Waiting 1 second for responses... ")
+  print("\nWaiting 1 second for responses... ")
   sleep(1)
 
   # here print out the nearby users
@@ -23,11 +22,11 @@ def listContacts(userEmail):
     with open("./data/contacts.json", "r") as Cfp:
       nearbyContacts= json.load(NCfp)
       contacts = json.load(Cfp)
-      print("\nFull Name | Email | IP Address")
+      print("\nFull Name | Email")
       if len(nearbyContacts) == 0:
         print("No Contacts Online.\n")
       for email in nearbyContacts:
         fullName = contacts[userEmail][email]['fullName']
-        print(fullName, "|", email, "|", nearbyContacts[email]['ip'])
+        print("   " + fullName, "|", email)
       
   return

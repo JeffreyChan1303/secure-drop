@@ -35,10 +35,10 @@ def tcpClientFile(userEmail, targetIP, targetName):
         ssock = context.wrap_socket(TCPsocket, server_hostname = "localhost")
 
         # select the file to send
-        directory = input("Enter the name of the file you wish to send in the storage folder: ")
+        directory = input("Enter the name of the file you wish to send in the storage folder: \n./storage/")
         fileName = directory.split("/")[-1]
         while not exists("./storage/" + directory):
-            directory = input(f"Bad file path {directory} \nEnter the location of the file you wish to send: ")
+            directory = input(f"Bad file path {directory} \nEnter the location of the file you wish to send: \n./storage/")
             fileName = directory.split("/")[-1]
 
         with open("./storage/" + directory, "rb") as DIRfp:
@@ -50,13 +50,17 @@ def tcpClientFile(userEmail, targetIP, targetName):
 
         ssock.send(b''.join([byteMsg, byteMsgName, userEmail,fileContent]))
 
-        msg = ssock.recv(1024)
+        print(f"\nWaiting 10 seconds for '{targetName}' to respond to your request...")
+        try:
+            ssock.settimeout(10)
+            msg = ssock.recv(1024).decode("utf-8")
 
-        if msg == "File Denied":
-            print(f"Your file '{directory}' was DENIED by '{targetName}'.")
+            if msg == "File Denied":
+                print(f"Your file '{directory}' was DENIED by '{targetName}'.")
         
-        if msg == "File Accepted":
-            print(f"Your file '{directory}' was ACCEPTED by '{targetName}'.")
+            if msg == "File Accepted":
+                print(f"Your file '{directory}' was ACCEPTED by '{targetName}'.")
+        except TimeoutError:
+            print(f"'{targetName}' did not respond in 10 seconds.")
 
-        print(f"Sent a 'File sent!' to ({host}, {port})")
         return
