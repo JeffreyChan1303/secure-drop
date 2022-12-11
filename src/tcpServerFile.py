@@ -2,15 +2,7 @@ import socket
 import json
 import ssl
 import time
-'''
-# This code is the dangerous code that propts the user for keybord permissions
-from pynput.keyboard import Key, Controller
 
-def pressA():
-    keyboard = Controller()
-    keyboard.press('a')
-    keyboard.release('a')
-'''
 def tcpServerFile(userEmail):
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain("./certs/pki/issued/ca.crt","./certs/pki/private/ca.key", 'secure-dropSJJ')
@@ -36,7 +28,6 @@ def tcpServerFile(userEmail):
             timestamp = msg[80: 112].decode("utf-8").strip()
             content = msg[112:]
 
-<<<<<<< HEAD
             print("length: ", len(msg))
             print("msg Header: ",msgHeader)
             print("msg Email: ", msgEmail)
@@ -49,8 +40,6 @@ def tcpServerFile(userEmail):
                 server.close()
 
 
-=======
->>>>>>> bd4eced3e7bb4a7529c2e219888c24c282ed5036
             if msgHeader == "File Send":
                 with open("./data/contacts.json", "r") as Cfp:
                     contacts = json.load(Cfp)
