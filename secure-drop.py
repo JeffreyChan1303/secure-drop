@@ -4,8 +4,10 @@ import threading
 
 def main():
   # login to application, stores the userEmail for future use
-  # userEmail = src.userLogin()
-  userEmail = "john@gmail.com"
+  #userEmail = src.userLogin()
+  userEmail = "john@gmail.com" # REMOVE THIS LINE
+  if userEmail is None:
+    return
   
   serverThreadUDP = threading.Thread(target=src.udpServer, args=(userEmail, ))
   serverThreadTCPList = threading.Thread(target=src.tcpServerList, args=(userEmail,))
@@ -41,7 +43,7 @@ def main():
       src.sendMessage(userEmail)
 
     elif command == "exit": 
-      print("Exiting Secure Drop...\n")
+      print("Exiting SecureDrop...\n")
       return
 
     else:

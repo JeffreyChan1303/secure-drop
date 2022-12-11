@@ -58,7 +58,7 @@ def tcpServerList(userEmail):
                                 "fullName": contacts[userEmail][emailReply]["fullName"],
                                 "ip": addr[0]
                             }
-                            json.dump(nearbyContacts, NCfpW)
+                            json.dump(nearbyContacts, NCfpW, indent=2)
 
             # if the message is "Contact not verified"
             if msg == "Contact Not Verified":

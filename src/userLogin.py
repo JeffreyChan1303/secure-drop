@@ -23,6 +23,12 @@ def userLogin():
       userRegistration(users)
 
   # user login loop
+  with open("./data/users.json", "r") as Ufp:
+    users = json.load(Ufp)
+    if len(users) == 0:
+      print("No users registered on this client. Exiting...\n")
+      return
+
   print("User Login...(enter 'exit' to quit):")
   email = input("Enter Email Adress: ").strip()
   if email == 'exit':
