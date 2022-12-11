@@ -9,7 +9,7 @@ def main():
   
   serverThreadUDP = threading.Thread(target=src.udpServer, args=(userEmail, ))
   serverThreadTCPList = threading.Thread(target=src.tcpServerList, args=(userEmail,))
-  serverThreadTCPFile = threading.Thread(target=src.tcpServerFile)
+  serverThreadTCPFile = threading.Thread(target=src.tcpServerFile, args=(userEmail,))
   serverThreadUDP.daemon = True
   serverThreadTCPFile.daemon = True
   serverThreadUDP.start()

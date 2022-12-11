@@ -2,7 +2,7 @@ import socket
 import json
 import ssl
 
-def tcpServerFile():
+def tcpServerFile(userEmail):
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain("./certs/pki/issued/ca.crt","./certs/pki/private/ca.key", 'secure-dropSJJ')
     server = ''
@@ -24,13 +24,30 @@ def tcpServerFile():
             # decode the 2 part message
             msgHeader = msg[:16].decode("utf-8").strip()
             msgFile = msg[16:48].decode("utf-8").strip()
-            content = msg[48:]
+            msgEmail = msg[48: 80].decode("utf-8").strip()
+            content = msg[80:]
 
             print("length: ", len(msg))
             print("msg Header: ",msgHeader)
-            # print("msg Content: ", content.decode("utf-8").strip())
+            print("msg Email: ", msgEmail)
 
             if msgHeader == "File Send":
+                with open("./data/contacts.json", "r") as Cfp:
+                    contacts = json.load(Cfp)
+                    msgFullName = contacts[userEmail][msgEmail]["fullName"]
+
+                # promp message for accepting file
+                recInput = input(f"Contact '{msgFullName} <{msgEmail}>' is sending a file '{msgFile}'. Accept (y/n)?")
+                while recInput.lower() != 'y' or recInput.lower() != 'n':
+                    recInput = input(f"Invalid input. \nContact '{msgFullName} <{msgEmail}>' is sending a file '{msgFile}'. Accept (y/n)?")
+                
+                if recInput.lower() == 'n':
+                    server.send(b"File Denied", (addr[0], port))
+                    return
+                
+
                 with open(f"./storage/{msgFile}", "wb") as OUTfp:
                     OUTfp.write(content)
+                server.send(b"File Recieved", (addr[0], port))
+
                 server.close()
