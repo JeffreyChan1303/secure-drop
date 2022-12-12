@@ -46,8 +46,11 @@ def main():
       print("Exiting SecureDrop...\n")
       return
 
-    elif command.lower() == 'y' or command .lower() == 'n':
-      break
+    elif command.lower() == 'y':
+      print("Are you sure you want to accept the file? (y/n)")
+
+    elif command .lower() == 'n':
+      print("Are you sure you want to deny the file? (y/n)")
 
     else:
       print(f"\n'{command}' is not a valid command")

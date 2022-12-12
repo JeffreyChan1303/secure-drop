@@ -48,7 +48,9 @@ def tcpServerFile(userEmail):
                     with open(f"./storage/{msgFile}", "wb") as OUTfp:
                         OUTfp.write(content)
                     server.send(b"File Accepted")
+                    print(f"File '{msgFile}' has been ACCEPTED")
                 else:
                     server.send(b"File Denied")
+                    print(f"File '{msgFile}' has been DENIED")
 
                 server.close()
