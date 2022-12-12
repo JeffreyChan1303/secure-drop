@@ -49,7 +49,7 @@ def main():
       print("Are you sure you want to accept the file? (y/n)")
 
     elif command .lower() == 'n':
-      print("Are you sure you want to deny the file? (y/n)")
+      print("Enter 'n' again if you want to deny this file.")
 
     else:
       print(f"\n'{command}' is not a valid command")
