@@ -5,8 +5,11 @@ import time
 
 
 def tcpServerFile(userEmail):
+
+    # Using the certificate Authority to check the certificate of user
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain("./certs/pki/issued/ca.crt","./certs/pki/private/ca.key", 'secure-dropSJJ')
+
     # sets up the options and address for the TCP socket
     TCPsocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     TCPsocket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
@@ -15,6 +18,7 @@ def tcpServerFile(userEmail):
     TCPsocket.bind((host,port))
     TCPsocket.listen(10)
     
+    # Protecting the connection with the Certificate
     with context.wrap_socket(TCPsocket,server_side=True) as ssock:
         while True:
             # accept the file send

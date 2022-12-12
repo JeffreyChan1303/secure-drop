@@ -3,7 +3,9 @@ import json
 import ssl
 
 
+# establish tcp connection with specific host and port number
 def tcpClientList(userEmail, targetIP):
+    # Retrieving the Certificate for the logged in user
     with open("./data/users.json", "r") as Cfp:
         data = json.load(Cfp)
         userCert = data[userEmail]["fullName"]
@@ -12,6 +14,7 @@ def tcpClientList(userEmail, targetIP):
 
     location = "./certs/pki/issued/" + userCert + ".crt"
 
+    # Verifying the Certificate of the user
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context = ssl._create_unverified_context()
     context.load_verify_locations(location)
@@ -22,6 +25,8 @@ def tcpClientList(userEmail, targetIP):
         host = targetIP
         port = 25565 # tcp list port number
         TCPsocket.connect((host,port))
+
+        # Using Certificate to encrypt the TCP connection
         ssock = context.wrap_socket(TCPsocket, server_hostname = "localhost")
 
         # sends a reply to the initial broadcast

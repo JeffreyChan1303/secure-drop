@@ -6,6 +6,8 @@ import ssl
 # open tcp server on a specific host, and port number.
 def tcpServerList(userEmail):
     emailReply = ""
+
+    # Using the Certificate Authority to verify the certificate
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain("./certs/pki/issued/ca.crt","./certs/pki/private/ca.key", 'secure-dropSJJ')
 
@@ -19,6 +21,8 @@ def tcpServerList(userEmail):
     TCPsocket.settimeout(1)
 
     # listening for "List Reply" or "Both contacts verified"
+
+    # Protecting the connection with the Certificate
     with context.wrap_socket(TCPsocket,server_side=True) as ssock:
         while True:
             # timeout if there are no other users online

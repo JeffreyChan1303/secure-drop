@@ -25,6 +25,7 @@ def toBytes32(msg):
 
 def tcpClientFile(userEmail, targetIP, targetName):
 
+    # Retrieving the unique Certificate of logged in user
     with open("./data/users.json", "r") as Cfp:
         data = json.load(Cfp)
         userCert = data[userEmail]["fullName"]
@@ -33,6 +34,7 @@ def tcpClientFile(userEmail, targetIP, targetName):
 
     location = "./certs/pki/issued/" + userCert + ".crt"
 
+    # Verifying the user Certificate
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context = ssl._create_unverified_context()
     context.load_verify_locations(location)
@@ -43,6 +45,8 @@ def tcpClientFile(userEmail, targetIP, targetName):
         host = targetIP
         port = 25575 # tcp server port number
         TCPsocket.connect((host,port))
+
+        # Encrypting the user's connection using the Certificate  
         ssock = context.wrap_socket(TCPsocket, server_hostname = "localhost")
 
         # select the file to send
