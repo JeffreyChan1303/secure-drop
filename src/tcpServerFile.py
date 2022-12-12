@@ -5,7 +5,6 @@ import time
 
 
 def tcpServerFile(userEmail):
-
     # Using the certificate Authority to check the certificate of user
     context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain("./certs/pki/issued/ca.crt","./certs/pki/private/ca.key", 'secure-dropSJJ')
