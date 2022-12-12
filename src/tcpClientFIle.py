@@ -54,11 +54,11 @@ def tcpClientFile(userEmail, targetIP, targetName):
 
         with open("./storage/" + directory, "rb") as DIRfp:
             fileContent = DIRfp.read()
-        
+    
         byteMsg = toBytes16("File Send")
         byteMsgName = toBytes32(fileName)
         userEmail = toBytes32(userEmail)
-        byteTime = toBytes32(time.time())
+        byteTime = toBytes32(str(time.time()))
 
         ssock.send(b''.join([byteMsg, byteMsgName, userEmail, byteTime, fileContent]))
 
