@@ -33,8 +33,7 @@ def tcpServerFile(userEmail):
 
             # get the time that the message was received
             timeElapsed = time.time() - timestamp
-            print(timeElapsed)
-
+            
             # check if the message was sent within a reasonable time
             if timeElapsed > 5:
                 print('Possible Replay Attack!')
