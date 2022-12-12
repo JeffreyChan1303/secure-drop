@@ -24,7 +24,7 @@ def listContacts(userEmail):
       contacts = json.load(Cfp)
       print("\nFull Name | Email")
       if len(nearbyContacts) == 0:
-        print("No Contacts Online.\n")
+        print("   No Contacts Online.\n")
       for email in nearbyContacts:
         fullName = contacts[userEmail][email]['fullName']
         print("   " + fullName, "|", email)

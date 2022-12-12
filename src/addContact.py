@@ -15,7 +15,6 @@ def addContact(userEmail):
   if fullName == 'exit':
     return
 
-  fullName = input("  Enter Full Name: ").strip()
   email = input("  Enter Email: ").strip()
 
   # add contact into the user's contacts

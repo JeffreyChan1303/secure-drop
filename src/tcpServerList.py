@@ -32,7 +32,7 @@ def tcpServerList(userEmail):
                 emailReply = msg[1]
                 with open("./data/contacts.json", "r") as Cfp:
                     allContacts = json.load(Cfp)
-                    if emailReply in allContacts:
+                    if emailReply in allContacts[userEmail]:
                         server.send(bytes(f"List Request #2,{userEmail}", "utf-8"))
                     else:
                         server.send(bytes(f"Contact Not Verified", "utf-8"))
