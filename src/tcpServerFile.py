@@ -28,9 +28,10 @@ def tcpServerFile(userEmail):
 
             curtime = time.time()
 
-            if timestamp > curtime + 2 and timestamp < curtime - 2:
+            if curtime + 5 > timestamp:
                 print('Possible Replay Attack!')
                 server.close()
+                return
 
             if msgHeader == "File Send":
                 with open("./data/contacts.json", "r") as Cfp:
