@@ -1,9 +1,10 @@
 import json
 from src.tcpClientFIle import tcpClientFile
 
+
 def sendMessage(userEmail):
     targetEmail = ''
-    
+    # return if there are no contacts available
     with open("./data/nearbyContacts.json", "r") as NCfp:
         nearbyContacts= json.load(NCfp)
         if len(nearbyContacts) == 0:
@@ -20,5 +21,6 @@ def sendMessage(userEmail):
             if targetEmail not in nearbyContacts:
                 print("'" + inputName + "' is not online.\n")
 
+        # start a tcp connection with the specified user
         targetIP = nearbyContacts[targetEmail]["ip"]
         tcpClientFile(userEmail, targetIP, inputName)

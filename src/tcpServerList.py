@@ -2,6 +2,7 @@ import socket
 import json
 import ssl
 
+
 # open tcp server on a specific host, and port number.
 def tcpServerList(userEmail):
     emailReply = ""
@@ -12,7 +13,7 @@ def tcpServerList(userEmail):
     TCPsocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
     TCPsocket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
     host = '0.0.0.0'
-    port = 25565
+    port = 25565 # tcp list port number
     TCPsocket.bind((host,port))
     TCPsocket.listen(10)
     TCPsocket.settimeout(1)
@@ -20,10 +21,13 @@ def tcpServerList(userEmail):
     # listening for "List Reply" or "Both contacts verified"
     with context.wrap_socket(TCPsocket,server_side=True) as ssock:
         while True:
+            # timeout if there are no other users online
             try:
                 server, addr = ssock.accept()
             except TimeoutError:
                 return
+
+            # get the incoming message
             msg = server.recv(1024)
             msg = msg.decode("utf-8").split(",")
 
@@ -37,18 +41,19 @@ def tcpServerList(userEmail):
                     else:
                         server.send(bytes(f"Contact Not Verified", "utf-8"))
             
+            # get the next incoming message
             msg = server.recv(1024)
             msg = msg.decode("utf-8")
 
-            # if the message is "Both contacts verified"
+            # if the message is "Both contacts verified" write the nearby contacts
             if msg == "Both Contacts Verified":
                 with open("./data/nearbyContacts.json", "r") as NCfpR:
                     nearbyContacts = json.load(NCfpR)
-                    with open("./data/nearbyContacts.json", "w") as NCfpW:
-                        with open("./data/contacts.json", "r") as Cfp:
-                            contacts = json.load(Cfp)
-                            nearbyContacts[emailReply] = {
-                                "fullName": contacts[userEmail][emailReply]["fullName"],
-                                "ip": addr[0]
-                            }
-                            json.dump(nearbyContacts, NCfpW, indent=2)
+                with open("./data/contacts.json", "r") as Cfp:
+                    contacts = json.load(Cfp)
+                with open("./data/nearbyContacts.json", "w") as NCfpW:
+                    nearbyContacts[emailReply] = {
+                        "fullName": contacts[userEmail][emailReply]["fullName"],
+                        "ip": addr[0]
+                    }
+                    json.dump(nearbyContacts, NCfpW, indent=2)
