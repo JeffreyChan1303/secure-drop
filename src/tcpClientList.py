@@ -26,7 +26,7 @@ def tcpClientList(userEmail, targetIP):
         if msg[0] == "List Request #2":
             with open("./data/contacts.json", "r") as Cfp:
                 allContacts = json.load(Cfp)
-                if msg[1] in allContacts:
+                if userEmail in allContacts and msg[1] in allContacts[userEmail]:
                     print(f"Sent a 'Both Contacts Verified' to ({host}, {port})")
                     ssock.send(bytes("Both Contacts Verified", "utf-8"))  
                     ssock.close()
